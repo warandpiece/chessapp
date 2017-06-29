@@ -22,3 +22,6 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# simplecov files
+coverage
