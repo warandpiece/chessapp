@@ -56,4 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'foundation-rails'
+gem 'simplecov', :require => false, :group => :test
 gem 'codacy-coverage', :require => false
