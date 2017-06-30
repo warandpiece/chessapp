@@ -7,6 +7,4 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
     expect(user.first_name).to eq("John")
   end
-
-
 end
