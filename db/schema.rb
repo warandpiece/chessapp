@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630124302) do
+ActiveRecord::Schema.define(version: 20170701141453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20170630124302) do
 
   create_table "moves", force: :cascade do |t|
     t.integer  "move_count"
-    t.integer  "moves_taken"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "moves_taken", default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "pieces", force: :cascade do |t|
