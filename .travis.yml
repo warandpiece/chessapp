@@ -13,3 +13,9 @@ script:
 
 before_script:
   - psql -c 'create database warandpiece_test' -U postgres
+
+deploy:
+  provider: heroku
+  api_key: edb13eb5-b84a-4008-83d5-aa62fe2e162f
+  app:
+    chessapp: warandpiece
