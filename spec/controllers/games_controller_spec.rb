@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
+  # user1 = FactoryGirl.create(:user)
+  # user2 = FactoryGirl.create(:user)
+  
+
   describe "games#new" do
     it "" do
 
