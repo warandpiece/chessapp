@@ -8,10 +8,11 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
+    #@game = current_user.games.create(game_params)
   end
 
   def update
-    @game = Game.find_by_id(params[:id])
+    @game = current_user.games.find_by_id(params[:id])
     return render_not_found if @game.blank?
     return render_not_found(:forbidden) if @game.user != current_user
     @game.update_attributes(game_params)
