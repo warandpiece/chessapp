@@ -9,8 +9,8 @@ FactoryGirl.define do
   end
 
   factory :game do
-    white_player = Factory(:user)
-    black_player = Factory(:user)
-    game_status_id = "In play"
+    white_player Factory(:user)
+    black_player Factory(:user)
+    game_status_id "In play"
   end
 end
