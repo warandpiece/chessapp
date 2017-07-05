@@ -10,7 +10,7 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = Piece.find_by_id(params[:id])
+    @move = current_user.games.pieces.find_by_id(params[:id])
     return render_not_found if @piece.blank?
     return render_not_found(:forbidden) if @piece.user != current_user
     @piece.update_attributes(piece_params)

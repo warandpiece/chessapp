@@ -8,7 +8,6 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
-    #@game = current_user.games.create(game_params)
   end
 
   def update

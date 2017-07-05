@@ -10,7 +10,7 @@ class MovesController < ApplicationController
   end
 
   def update
-    @move = Move.find_by_id(params[:id])
+    @move = current_user.games.moves.find_by_id(params[:id])
     return render_not_found if @move.blank?
     return render_not_found(:forbidden) if @move.user != current_user
     @move.update_attributes(move_params)
