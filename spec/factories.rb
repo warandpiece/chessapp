@@ -8,6 +8,13 @@ FactoryGirl.define do
     sequence(:username) { |n| "chessmaster#{n}" }
   end
 
+  factory :invalid_user, parent: :user do
+    email nil
+    password nil
+    username nil
+    first_name nil
+  end
+
   factory :game do
     white_player Factory(:user)
     black_player Factory(:user)
