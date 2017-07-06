@@ -1,9 +1,16 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+  end
+
+  def show
+    @game = Game.find(params[:id])
+  end
+
   def new
     @game = Game.new
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   def create
