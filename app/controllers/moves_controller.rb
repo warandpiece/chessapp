@@ -6,13 +6,18 @@ class MovesController < ApplicationController
   end
 
   def create
-    @move = Move.create(move_params)
+    @move = Move.new(move_params)
+
+    if @move.save
+      render :show, status: :created
+    else
+      render :new, status: :unprocessable_entity # 422
+    end
   end
 
   def update
-    @move = current_user.games.moves.find_by_id(params[:id])
+    @move = current_user.games.moves.find_by(id: params[:id])
     return render_not_found if @move.blank?
-    return render_not_found(:forbidden) if @move.user != current_user
     @move.update_attributes(move_params)
   end
 
