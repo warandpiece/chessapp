@@ -17,9 +17,8 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game = current_user.games.find_by_id(params[:id])
+    @game = current_user.games.find_by(id: params[:id])
     return render_not_found if @game.blank?
-    return render_not_found(:forbidden) if @game.user != current_user
     @game.update_attributes(game_params)
   end
 
