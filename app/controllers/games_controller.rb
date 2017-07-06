@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    redirect_to root_path
+    
   end
 
   def create
