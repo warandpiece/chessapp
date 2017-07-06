@@ -2,8 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @game = Game.new
-    
+    @game = Game.new  
   end
 
   def create
