@@ -55,7 +55,7 @@ RSpec.describe GamesController, type: :controller do
 
         expect {
           post :create, { params: { game: { white_player: user1.id, 
-               black_player: nil, game_status:"in play"} } }
+               black_player: user2.id, game_status: "" } } }
           }.to change{Game.count}.by(0)
       end
     end

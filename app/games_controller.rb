@@ -3,7 +3,6 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    
   end
 
   def create
@@ -14,6 +13,10 @@ class GamesController < ApplicationController
     else
       render :new, status: :unprocessable_entity # 422
     end
+  end
+
+  def show
+
   end
 
   def update
