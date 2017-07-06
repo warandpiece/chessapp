@@ -78,26 +78,4 @@ RSpec.describe GamesController, type: :controller do
       end
     end
   end
-
-  describe "#update" do
-    context "with valid params" do
-      it "should update the database" do
-        user1 = FactoryGirl.create(:user)
-        user2 = FactoryGirl.create(:user)
-        sign_in user1
-        game = FactoryGirl.create(:game, white_player: user1.id, black_player: user2.id)
-        
-
-        #put :update, { params: { game: { game_status: "White in Check" } } }
-        put :update, params: {id: game.id, game: { game_status: 'White in Check' } }      
-        expect(game.game_status).to eq("White in Check")
-      end
-    end
-
-
-    context "with invalid params" do
-      it "" do
-      end
-    end
-  end
 end
