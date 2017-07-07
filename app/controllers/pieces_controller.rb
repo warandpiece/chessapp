@@ -6,13 +6,19 @@ class PiecesController < ApplicationController
   end
 
   def create
-    @piece = Piece.create(piece_params)
+    @piece = Piece.new(piece_params)
+
+    if @piece.save
+      render :show, status: :created
+    else
+      render :new, status: :unprocessable_entity # 422
+    end
+
   end
 
   def update
-    @move = current_user.games.pieces.find_by_id(params[:id])
+    @piece = current_user.games.pieces.find_by(id: params[:id])
     return render_not_found if @piece.blank?
-    return render_not_found(:forbidden) if @piece.user != current_user
     @piece.update_attributes(piece_params)
   end
 
