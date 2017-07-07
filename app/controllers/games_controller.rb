@@ -2,6 +2,8 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @game = Game.all
+    # or Game.available?
   end
 
   def show
