@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe MovesController, type: :controller do
   describe "#new" do
     it "assigns a new move to @move" do
-      user1 = FactoryGirl.create(:user)
-      sign_in user1
+      white_player = FactoryGirl.create(:white_player)
+      sign_in white_player
 
       get :new
 
