@@ -1,6 +1,15 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @game = Game.all
+    # or Game.available?
+  end
+
+  def show
+    @game = current_user.games.find_by(id: params[:id])
+  end
+
   def new
     @game = Game.new
   end
