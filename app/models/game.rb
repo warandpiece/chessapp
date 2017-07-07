@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
-  belongs_to :user, foreign_key: 'white_player'
-  # belongs_to :user, :class_name => "User", :foreign_key => "user_id"
+  belongs_to :white_player, class_name: 'User'
+  belongs_to :black_player, class_name: 'User'
+
   has_many :pieces
   has_many :moves
 
