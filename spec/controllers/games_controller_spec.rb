@@ -37,24 +37,10 @@ RSpec.describe GamesController, type: :controller do
         black_player = FactoryGirl.create(:black_player)
         sign_in white_player
 
-        puts white_player.id
-        puts white_player.inspect
-        
-        post :create, params: { game: { white_player: white_player.id,
-                                        black_player: black_player.id, 
-                                        game_status: 'In play' } }
-
-        expect(response).to change(Game, :count).by(1)
-
-        # expect {
-        # post :create, { params: { game: { white_player: white_player.id, 
-        #      black_player: black_player.id, game_status: "In play" } } }
-        #   }.to change{Game.count}.by(1)
-        # expect do
-        #   post :create, params: { game: { white_player: white_player.id,
-        #                                   black_player: black_player.id, 
-        #                                   game_status: 'In play' } }
-        # end.to change(Game, :count).by(1)
+        expect do
+          post :create, params: { game: { white_player_id: white_player,
+                                          black_player_id: black_player, game_status: 'In play' } }
+        end.to change(Game, :count).by(1)
       end
     end
 
@@ -65,19 +51,18 @@ RSpec.describe GamesController, type: :controller do
         sign_in white_player
 
         expect do
-          post :create, params: { game: { white_player: white_player.id,
-                                          black_player: black_player.id,
-                                          game_status: '' } }
+          post :create, params: { game: { white_player_id: white_player,
+                                          black_player_id: black_player, game_status: '' } }
         end.to change { Game.count }.by(0)
       end
 
       it 'should not save to database with invalid white_player' do
         black_player = FactoryGirl.create(:black_player)
+        sign_in black_player
 
         expect do
-          post :create, params: { game: { white_player: nil,
-                                          black_player: black_player.id, 
-                                          game_status: 'In Play' } }
+          post :create, params: { game: { white_player_id: nil,
+                                          black_player_id: black_player, game_status: 'In Play' } }
         end.to change { Game.count }.by(0)
       end
 
@@ -86,9 +71,8 @@ RSpec.describe GamesController, type: :controller do
         sign_in white_player
 
         expect do
-          post :create, params: { game: { white_player: white_player.id,
-                                          black_player: nil, 
-                                          game_status: 'In Play' } }
+          post :create, params: { game: { white_player_id: white_player,
+                                          black_player_id: nil, game_status: 'In Play' } }
         end.to change { Game.count }.by(0)
       end
     end
@@ -97,8 +81,9 @@ RSpec.describe GamesController, type: :controller do
   describe '#update' do
     context 'with valid params' do
       it 'should update the database' do
-        game = FactoryGirl.create(:game)
-        sign_in game.white_player
+        white_player = FactoryGirl.create(:white_player)
+        sign_in white_player
+        game = FactoryGirl.create(:game, white_player: white_player)
 
         put :update, params: { id: game.to_param, game: { game_status: 'White in Check' } }
 

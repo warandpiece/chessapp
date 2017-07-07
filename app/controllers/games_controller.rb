@@ -9,9 +9,10 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
 
     if @game.save
-      redirect_to @game, notice: 'Game was successfully created.'
+      render :show, status: :created
+      #redirect_to @game, notice: 'Game was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity # 422render :new
     end
   end
 
