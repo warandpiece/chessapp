@@ -42,6 +42,7 @@
 //  37. Top Bar
 
 @import 'util/util';
+@import "font-awesome";
 
 // 1. Global
 // ---------
@@ -612,9 +613,9 @@ $tooltip-radius: $global-radius;
 // 37. Top Bar
 // -----------
 
-$topbar-padding: 0.5rem;
+$topbar-padding: 0.3rem;
 $topbar-background: $light-gray;
 $topbar-submenu-background: $topbar-background;
-$topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
+$topbar-title-spacing: 0.3rem 1rem 0.3rem 0;
 $topbar-input-width: 200px;
 $topbar-unstack-breakpoint: medium;
