@@ -8,6 +8,7 @@
     <%= csrf_meta_tags %>
   </head>
 
+  <body>
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">
@@ -39,16 +40,14 @@
 <!-- <%= yield %> -->
   </div>
 
-  <body>
-  <div class="about-chess">
-    <div class="text-center">
-      <h1>War & Piece</h1>
-      <h4>Built with sweat, tears and code...</h4>
-      <div class="buttons">
-        <a class="button round"<%= link_to 'JOIN GAME', games_path %></a>
-        <a class="button round"<%= link_to 'NEW GAME', new_game_path %></a>
+  <div class="about-chess text-center">
+  <h1>War & Piece</h1>
+  <h4>Built with sweat, tears and code...</h4>
+  <div class="buttons">
+    <a class="button round"<%= link_to 'JOIN GAME', games_path %></a>
+    <a class="button round"<%= link_to 'NEW GAME', new_game_path %></a>
   </div>
+</div>
 
-    
   </body>
 </html>
