@@ -36,15 +36,19 @@
         <% end %>
       </ul>
     </div>
+<!-- <%= yield %> -->
   </div>
 
   <body>
   <div class="about-chess">
     <div class="text-center">
       <h1>War & Piece</h1>
-
+      <h4>Built with sweat, tears and code...</h4>
+      <div class="buttons">
+        <a class="button round"<%= link_to 'JOIN GAME', games_path %></a>
+        <a class="button round"<%= link_to 'NEW GAME', new_game_path %></a>
   </div>
 
-    <%= yield %>
+    
   </body>
 </html>
