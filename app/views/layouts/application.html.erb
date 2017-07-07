@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>War and Piece</title>
-    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= stylesheet_link_tag    "application" %>
@@ -26,11 +24,11 @@
       <ul class="menu">
       <% if user_signed_in? %>
         <li class="menu-text">
-          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
         </li>
       <% else %>
         <li class="menu-text">
-          <%= link_to "Login",  new_user_session_path %>
+          <%= link_to "Sign in",  new_user_session_path %>
         </li>
         <li class="menu-text">
           <%= link_to "Sign up", new_user_registration_path %>
@@ -41,7 +39,11 @@
   </div>
 
   <body>
+  <div class="about-chess">
+    <div class="text-center">
+      <h1>War & Piece</h1>
 
+  </div>
 
     <%= yield %>
   </body>
