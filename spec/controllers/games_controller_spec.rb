@@ -97,4 +97,12 @@ RSpec.describe GamesController, type: :controller do
       end
     end
   end
+
+  def game_created
+    player_id = FactoryGirl.create(:user)
+    Game.create(white_user: player_id)
+  end
+
+  # or create within #new
+
 end
