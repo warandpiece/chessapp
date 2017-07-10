@@ -98,11 +98,13 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
-  def game_created
-    player_id = FactoryGirl.create(:user)
-    Game.create(white_user: player_id)
-  end
+  # def game_created
+  #   user or player_id = FactoryGirl.create(:user)
+  #   Game.create(white_user: player_id)
+  # end
 
-  # or create within #new
+  # no player_id in create_games migration
+  # default player white or black?
+  # or create within #new, #show or #create?
 
 end
