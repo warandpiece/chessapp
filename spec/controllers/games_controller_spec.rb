@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
+  # index or new?
+  # describe 'games#index' do
+  #   it 'should successfully show the page' do
+  #     get :index
+  #     expect(response).to have_http_status(:success)
+  #   end
+  # end
+
   describe '#new' do
-    # 'games#new'
-    # it "should successfully show the page" do
-      # get :new
-      # expect(response).to have_http_status(:success)
-      
     it 'assigns a new game to @game' do
       white_player = FactoryGirl.create(:white_player)
       sign_in white_player
