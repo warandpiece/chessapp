@@ -11,4 +11,11 @@ class Piece < ApplicationRecord
   scope :bishops, -> { where(piece_type: 'Bishop') }
   scope :knights, -> { where(piece_type: 'Knight') }
   scope :pawns,   -> { where(piece_type: 'Pawn') }
+
+
+  def is_obstructed(destination_x, destination_y)
+    Piece.where(destinatio
+    Piece.all
+  end
+
 end
