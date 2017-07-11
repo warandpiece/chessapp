@@ -1,14 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-  # index or new?
-  # describe 'games#index' do
-  #   it 'should successfully show the page' do
-  #     get :index
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
-
   describe '#new' do
     it 'assigns a new game to @game' do
       white_player = FactoryGirl.create(:white_player)
@@ -105,14 +97,5 @@ RSpec.describe GamesController, type: :controller do
       end
     end
   end
-
-  # def game_created
-  #   user or player_id = FactoryGirl.create(:user)
-  #   Game.create(white_user: player_id)
-  # end
-
-  # no player_id in create_games migration
-  # default player white or black?
-  # or create within #new, #show or #create?
-
+  
 end
