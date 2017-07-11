@@ -9,6 +9,9 @@ RSpec.describe Bishop, type: :model do
     expect { FactoryGirl.create(:bishop) }.to change { Piece.count }
   end
 
+  describe 'is_position_occupied' do
+  end
+
   #describe '#is_obstructed' do
    # let(:bishop) { FactoryGirl.create(:bishop, ) }
     #it 'should return true if obstructed' do

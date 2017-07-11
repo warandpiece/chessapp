@@ -13,7 +13,8 @@ class Piece < ApplicationRecord
   scope :pawns,   -> { where(piece_type: 'Pawn') }
 
   def is_position_occupied(x,y)
-    Piece.find_by_game_id(current_piece)
+    piece = Piece.find_by current_position_x: x
+    return true if piece != nil 
   end
 
 #Piece.find_by_game_id(current_piece.game_id).filter{|p| p.current_position_x == current_piece.current_position_x
