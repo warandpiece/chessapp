@@ -6,7 +6,7 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'is_position_occupied' do
-  	let(:piece) { FactoryGirl.create(:piece, current_position_x = 5, current_position_y = 5) }
+  	let(:piece) { FactoryGirl.create(:piece) }
     it 'should return true if position is occupied' do
     	expect(piece.is_position_occupied(5,5)).to be true
     end
