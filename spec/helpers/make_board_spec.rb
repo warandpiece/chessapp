@@ -19,12 +19,11 @@ RSpec.describe MakeGame, type: :helper do
 
   describe "make_rooks" do
     it "should create white rooks on a1 & ah and black rooks on a8 & h8" do
-        white_player = FactoryGirl.create(:white_player)
-        black_player = FactoryGirl.create(:black_player)
-        sign_in white_player
-        game = FactoryGirl.create(:game, white_player: white_player, 
-                                         black_player: black_player,
-                                         game_status: "New Game")
+      white_player = FactoryGirl.create(:white_player)
+      black_player = FactoryGirl.create(:black_player)
+      sign_in white_player
+      game = FactoryGirl.create(:game, white_player: white_player, 
+                                       game_status: "New Game")
 
 
       
