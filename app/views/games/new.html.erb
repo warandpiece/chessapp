@@ -7,12 +7,14 @@
     <tr>
       <% 0.upto(7) do |col| %>
         <td>
-          <%= if (props = piece_at_location?(@pieces, row, col))
+          <%=
+            if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
               type = props[1]
               image_tag("#{color}-#{type}.svg")
             else
-            end %>
+            end
+          %>
         </td>
       <% end %>
     </tr>
