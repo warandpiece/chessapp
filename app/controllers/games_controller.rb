@@ -29,7 +29,6 @@ class GamesController < ApplicationController
       { type: "bishop", color: "white", x: 5, y: 0 },
       { type: "king", color: "white", x: 4, y: 0 },
       { type: "queen", color: "white", x: 3, y: 0 },
-      
       { type: "pawn", color: "black", x: 0, y: 6 },
       { type: "pawn", color: "black", x: 1, y: 6 },
       { type: "pawn", color: "black", x: 2, y: 6 },
