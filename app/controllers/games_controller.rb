@@ -12,6 +12,11 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @pieces = [
+      { type: "pawn", color: "white", x: 0, y: 1 },
+      { type: "queen", color: "white", x: 3, y: 0 },
+      { type: "pawn", color: "black", x: 6, y: 6 }
+    ]
   end
 
   def create
