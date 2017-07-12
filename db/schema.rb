@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711124045) do
+ActiveRecord::Schema.define(version: 20170712183347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,8 @@ ActiveRecord::Schema.define(version: 20170711124045) do
     t.string   "piece_color"
     t.integer  "current_position_x"
     t.integer  "current_position_y"
-    t.integer  "starting_position_x"
-    t.integer  "starting_position_y"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "game_id"
     t.integer  "user_id"
   end
