@@ -9,6 +9,15 @@ class Game < ApplicationRecord
   validates :black_player, presence: true
   validates :game_status, presence: true
 
-  avail_scope :avail, -> { where( 
-  white_player.present? == false).or(where(black_player.present? == false ))}
+  # scope :avail, -> {where(avail: true)}
+
+  def avail
+    if white_player.present? == false
+      return true
+    elsif black_player.present? == false
+      return true
+    else
+      return false
+      end 
+  end
 end
