@@ -94,7 +94,7 @@ class GameBoard
 
     (0..7).each do |y|
       Piece.create(piece_type: "Pawn", piece_color: "black", 
-        current_position_x: 6, current_position_y: y, 
+        current_position_x: 1, current_position_y: y, 
         user_id: user_id, game_id: game_id)
     end
   end
