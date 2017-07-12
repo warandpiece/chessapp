@@ -19,22 +19,92 @@ RSpec.describe GameBoard, type: :model do
     end
   end
 
-  # describe "#make_rook" do 
-  #   it "should add rooks to the correct positions" do
-  #     # User.create(email: "test@test.com", username: "chessguru", 
-  #     #   password: "password3", password_confirmation: "password3")
-  #     game = FactoryGirl.create(:game)
+  describe '#make_rook' do
+    it 'should add rooks to the correct positions' do
+      game = FactoryGirl.create(:game)
+      rook_positions = [{ x: 7, y: 0 }, { x: 7, y: 7 }, { x: 0, y: 0 }, { x: 0, y: 7 }]
 
-  #     GameBoard.make_rook(game.white_player_id, game.id)
-  #     rook_positions = [{ x: 7, y: 0 }, { x: 7, y: 7 }, { x: 0, y: 0 }, { x: 0, y: 7 }]
-  #     rooks = Piece.rooks.count
-      
-  #     expect(rooks).to eq(4)
+      GameBoard.make_rook(game.white_player_id, game.id)
 
-  #     rooks.each do |r|
-  #       expect(r.current_position_x).to eq(rook_positions[:x]) 
-  #       expect(r.current_position_y).to eq(rook_positions[:y]) 
-  #     end      
-  #   end
-  # end
+      rook_positions.each do |position|
+        expect(Rook.exists?(current_position_x: position[:x],
+                            current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
+
+  describe '#make_knight' do
+    it 'should add knights to the correct positions' do
+      game = FactoryGirl.create(:game)
+      knight_positions = [{ x: 7, y: 1 }, { x: 7, y: 6 }, { x: 0, y: 1 }, { x: 0, y: 6 }]
+
+      GameBoard.make_knight(game.white_player_id, game.id)
+
+      knight_positions.each do |position|
+        expect(Knight.exists?(current_position_x: position[:x],
+                              current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
+
+  describe '#make_bishop' do
+    it 'should add bishops to the correct positions' do
+      game = FactoryGirl.create(:game)
+      bishop_positions = [{ x: 7, y: 2 }, { x: 7, y: 5 }, { x: 0, y: 2 }, { x: 0, y: 5 }]
+
+      GameBoard.make_bishop(game.white_player_id, game.id)
+
+      bishop_positions.each do |position|
+        expect(Bishop.exists?(current_position_x: position[:x],
+                              current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
+
+  describe '#make_queen' do
+    it 'should add queens to the correct positions' do 
+      game = FactoryGirl.create(:game)
+      queen_positions = [{ x: 7, y: 3 }, { x: 0, y: 3 }]
+
+      GameBoard.make_queen(game.white_player_id, game.id)
+
+      queen_positions.each do |position|
+        expect(Queen.exists?(current_position_x: position[:x],
+                             current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
+
+  describe '#make_king' do
+    it 'should add kings to the correct positions' do
+      game = FactoryGirl.create(:game)
+      king_positions = [{ x: 7, y: 4 }, { x: 0, y: 4 }]
+
+      GameBoard.make_king(game.white_player_id, game.id)
+
+      king_positions.each do |position|
+        expect(King.exists?(current_position_x: position[:x],
+                            current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
+
+  describe '#make_pawn' do
+    it 'should add pawns to the correct positions' do
+      game = FactoryGirl.create(:game)
+      pawn_positions = [{ x: 6, y: 0}, { x: 6, y: 1}, { x: 6, y: 2}, 
+                        { x: 6, y: 3}, { x: 6, y: 4}, { x: 6, y: 5}, 
+                        { x: 6, y: 6}, { x: 6, y: 7}, { x: 1, y: 0}, 
+                        { x: 1, y: 1}, { x: 1, y: 2}, { x: 1, y: 3}, 
+                        { x: 1, y: 4}, { x: 1, y: 5}, { x: 1, y: 6}, 
+                        { x: 1, y: 7}]
+                        
+      GameBoard.make_pawn(game.white_player_id, game.id)
+
+      pawn_positions.each do |position|
+        expect(Pawn.exists?(current_position_x: position[:x],
+                            current_position_y: position[:y])).to eq(true)
+      end
+    end
+  end
 end
