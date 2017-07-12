@@ -74,7 +74,7 @@ class GameBoard
       user_id: user_id, game_id: game_id)
   end
 
-    def self.make_king(user_id, game_id)
+  def self.make_king(user_id, game_id)
     Piece.create(piece_type: "King", piece_color: "white", 
       current_position_x: 7, current_position_y: 4, 
       user_id: user_id, game_id: game_id)
