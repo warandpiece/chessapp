@@ -97,4 +97,5 @@ RSpec.describe GamesController, type: :controller do
       end
     end
   end
+  
 end
