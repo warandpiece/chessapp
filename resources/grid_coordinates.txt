@@ -1,5 +1,3 @@
-
-
  a8   b8   c8   d8   e8   f8   g8   h8
 x0y7 x1y7 x2y7 x3y7 x4y7 x5y7 x6y7 x7y7
 
@@ -23,11 +21,3 @@ x0y1 x1y1 x2y1 x3y1 x4y1 x5y1 x6y1 x7y1
 
  a1   b1   c1   d1   e1   f1   g1   h1
 x0y0 x1y0 x2y0 x3y0 x4y0 x5y0 x6y0 x7y0
-
-  
- 
- 
- 
- 
- 
- 
