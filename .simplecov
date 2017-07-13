@@ -11,4 +11,6 @@ end
 
 SimpleCov.start do
   add_filter "/images/"
+  add_filter "/db/"
+  add_filter "/helpers/"
 end
