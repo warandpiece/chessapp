@@ -15,22 +15,22 @@ RSpec.describe Game, type: :model do
 
     end
 
-    # it "Shows games with white player present but no black player as open" do
-    #   game = FactoryGirl.create(:game, black_player: nil)
-    #   expect(game.avail).to eq(true)
-    # end
+    it "Shows games with white player present but no black player as open" do
+      game = FactoryGirl.create(:game, :no_bl)
+      expect(game.avail).to eq(true)
+    end
 
     it "Shows games with white player not present but back player present as open" do
       game = FactoryGirl.create(:game, :no_wh)
       expect(game.avail).to eq(true)
     end
 
-    # it "Shows games with no white or black player present as open" do
-    #   game = FactoryGirl.create(:game, white_player: nil, black_player: nil) 
+    it "Shows games with no white or black player present as open" do
+      game = FactoryGirl.create(:game, :no_players) 
      
 
-    #   expect(game.avail).to eq(true)    
-    # end
+      expect(game.avail).to eq(true)    
+    end
 
   end
 end
