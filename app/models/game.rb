@@ -8,12 +8,4 @@ class Game < ApplicationRecord
   validates :white_player, presence: true
   validates :black_player, presence: true
   validates :game_status, presence: true
-
-  # after_create :set_game_board
-
-  # private
-
-  # def set_game_board
-  #   GameBoard.make_board
-  # end
 end
