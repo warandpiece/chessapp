@@ -78,6 +78,18 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
+  describe '#show' do
+    it 'something' do 
+      white_player = FactoryGirl.create(:white_player)
+      sign_in white_player
+      game = FactoryGirl.create(:game, white_player: white_player)
+
+      get :show, params: {id: game.id}
+
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe '#update' do
     context 'with valid params' do
       it 'should update the database' do
