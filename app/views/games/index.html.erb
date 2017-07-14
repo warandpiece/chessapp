@@ -6,14 +6,15 @@
   <div>
     <% @games.each do |game| %>
     <div>
-      <h3>Game # <%= game.id %></h3>
+      <h3>Game #<%= game.id %></h3>
       <br/>
       <h4>Started At: <%= game.created_at.strftime("%m-%d-%y") %></h4>
       <br/>
       <h4>Opponent: <%= game.user.username %></h4>
       <div>
-        <a class="button round"<%= link_to 'JOIN GAME', games_path %> </a>
+        <a class="button round"<%= link_to 'JOIN GAME', games_path %></a>
       </div>
     </div>
+  <% end %>
   </div>
 </div>

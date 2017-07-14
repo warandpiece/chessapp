@@ -120,17 +120,19 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'should list one game available to join' do
-      game = FactoryGirl.create(:game, white_player: white_player)
+      white_player = FactoryGirl.create(:white_player)
+      game = FactoryGirl.create(:game, :no_bl)
       black_player = FactoryGirl.create(:black_player)
       sign_in black_player
 
       get :index
-      expect(response).to eq(game.last)
+      expect(Game.available.map(&:id)[0]).to eq(game.id)
     end
 
     it 'should list the games available to join' do
-      game_1 = FactoryGirl.create(:game, white_player: white_player)
-      game_2 = FactoryGirl.create(:game, white_player: white_player)
+      white_player = FactoryGirl.create(:white_player)
+      game_1 = FactoryGirl.create(:game, :no_bl)
+      game_2 = FactoryGirl.create(:game, :no_bl)
       black_player = FactoryGirl.create(:black_player)
       sign_in black_player
 
@@ -138,10 +140,6 @@ RSpec.describe GamesController, type: :controller do
 
       expect(response).to have_http_status(:success)
       expect(Game.count).to eq(2)
-      game_ids = Game.collect do |game|
-        game["id"]
-      end
-      expect(game_ids).to eq([game_1.id, game_2.id])
     end
   end
-end
+endbun
