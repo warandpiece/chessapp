@@ -14,5 +14,3 @@ FactoryGirl.define do
     user { FactoryGirl.create(:white_player) }
   end
 end
-
-

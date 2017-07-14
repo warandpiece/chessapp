@@ -7,7 +7,6 @@ class PiecesController < ApplicationController
 
   def create
     @piece = Piece.new(piece_params)
-
     if @piece.save
       render :show, status: :created
     else
