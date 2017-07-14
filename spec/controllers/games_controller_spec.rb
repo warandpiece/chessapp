@@ -129,7 +129,7 @@ RSpec.describe GamesController, type: :controller do
       expect(Game.available.map(&:id)[0]).to eq(game.id)
     end
 
-    it 'should list the games available to join' do
+    it 'should list multiple games available to join' do
       white_player = FactoryGirl.create(:white_player)
       game_1 = FactoryGirl.create(:game, :no_bl)
       game_2 = FactoryGirl.create(:game, :no_bl)
@@ -142,4 +142,4 @@ RSpec.describe GamesController, type: :controller do
       expect(Game.count).to eq(2)
     end
   end
-endbun
+end

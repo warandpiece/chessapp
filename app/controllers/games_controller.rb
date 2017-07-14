@@ -52,7 +52,7 @@ class GamesController < ApplicationController
 
     if @game.save
       render :show, status: :created
-      redirect_to @game, notice: 'Game was successfully created.'
+      #redirect_to @game, notice: 'Game was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
