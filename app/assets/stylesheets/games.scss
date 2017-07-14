@@ -14,11 +14,17 @@ tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
 }
 
 tr:nth-child(even) td:nth-child(odd), tr:nth-child(odd) td:nth-child(even) {
-  background-color: green;
+  background-color: #006400;
 }
 
 tr, td {
   border: .01px black;
   margin: 0px;
+  padding: 0px;
+}
+
+td {
+  width: 60px;
+  height: 60px;
   padding: 0px;
 }
