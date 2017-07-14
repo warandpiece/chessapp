@@ -103,11 +103,45 @@ RSpec.describe GamesController, type: :controller do
         expect(game.game_status).to eq('White in Check')
       end
     end
+  end
 
-    context 'with invalid params' do
-      it '' do
+  describe 'games#index action' do
+    it 'should require users to be logged in' do
+      get :index
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it 'should successfully show the page if a user is logged in' do
+      white_player = FactoryGirl.create(:white_player)
+      sign_in white_player
+
+      get :index
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'should list one game available to join' do
+      game = FactoryGirl.create(:game, white_player: white_player)
+      black_player = FactoryGirl.create(:black_player)
+      sign_in black_player
+
+      get :index
+      expect(response).to eq(game.last)
+    end
+
+    it 'should list the games available to join' do
+      game_1 = FactoryGirl.create(:game, white_player: white_player)
+      game_2 = FactoryGirl.create(:game, white_player: white_player)
+      black_player = FactoryGirl.create(:black_player)
+      sign_in black_player
+
+      get :index
+
+      expect(response).to have_http_status(:success)
+      expect(Game.count).to eq(2)
+      game_ids = Game.collect do |game|
+        game["id"]
       end
+      expect(game_ids).to eq([game_1.id, game_2.id])
     end
   end
-  
 end
