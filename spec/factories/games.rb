@@ -7,9 +7,7 @@ FactoryGirl.define do
     end
 
     trait :no_wh do
-
       black_player { FactoryGirl.create(:black_player) }
- 
       game_status "In play"
     end
 
