@@ -12,7 +12,6 @@ class PiecesController < ApplicationController
     else
       render :new, status: :unprocessable_entity # 422
     end
-
   end
 
   def update
