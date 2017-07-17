@@ -67,3 +67,4 @@ gem 'simplecov', :require => false, :group => :test
 gem 'codacy-coverage', :require => false
 gem "figaro"
 gem "font-awesome-rails"
+gem 'simple_form'
