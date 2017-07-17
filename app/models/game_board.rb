@@ -13,7 +13,7 @@ class GameBoard
     end
   end
 
-  def self.make_board
+  def self.make_board(user_id, game_id)
     make_rook
     make_knight
     make_bishop
