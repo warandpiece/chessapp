@@ -12,6 +12,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @Pieces = Piece.where("game_id" = "@game.id")
   end
 
   def create
