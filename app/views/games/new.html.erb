@@ -1,6 +1,19 @@
-<h1 class="text-center">Chessboard</h1>
+<!-- keep this in #new -->
 
-<!-- move to show -->
+<!-- <div>
+  <div class="text-center">
+    <h2>Welcome to your new game!</h2>
+      <%= simple_form_for @game do |f| %>
+
+      <%= f.input :white_player_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+      <br />
+      <%= f.submit 'Create' %>
+    <% end %></div>
+</div> -->
+
+<!-- this will need to be moved to show -->
+
+<h2 class="text-center">Chessboard</h2>
 
 <table cellspacing="0" cellpadding="0" class="chessboard">
   <% 7.downto(0) do |row| %>
