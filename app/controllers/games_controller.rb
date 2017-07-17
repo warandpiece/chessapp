@@ -23,9 +23,6 @@ class GamesController < ApplicationController
     else
       render :new, status: :unprocessable_entity # 422
     end
-
-    # Set the white ID field = current_user.id or black ID field =  
-    # current_user.id on the `params` hash within your `create` action.
   end
 
   def update

@@ -14,12 +14,12 @@ class GameBoard
   end
 
   def self.make_board(user_id, game_id)
-    make_rook
-    make_knight
-    make_bishop
-    make_queen
-    make_king
-    make_pawn
+    make_rook(user_id, game_id)
+    make_knight(user_id, game_id)
+    make_bishop(user_id, game_id)
+    make_queen(user_id, game_id)
+    make_king(user_id, game_id)
+    make_pawn(user_id, game_id)
   end
 
   def self.make_rook(user_id, game_id)
