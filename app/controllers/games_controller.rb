@@ -8,11 +8,11 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(id: params[:id])
+    @pieces = Piece.where(game_id:  @game.id)
   end
 
   def new
     @game = Game.new
-    @pieces = Piece.where(:game_id => @game.id)
   end
 
   def create
