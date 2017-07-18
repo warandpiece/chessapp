@@ -35,6 +35,8 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'pry-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -65,3 +67,4 @@ gem 'simplecov', :require => false, :group => :test
 gem 'codacy-coverage', :require => false
 gem "figaro"
 gem "font-awesome-rails"
+gem 'simple_form'

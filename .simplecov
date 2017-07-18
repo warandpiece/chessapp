@@ -5,6 +5,12 @@ end
 
 SimpleCov.at_exit do
   SimpleCov.result.format!
-  SimpleCov.minimum_coverage 75.54
+  SimpleCov.minimum_coverage 75.36
 #  SimpleCov.minimum_coverage_by_file 63
+end
+
+SimpleCov.start do
+  add_filter "/images/"
+  add_filter "/db/"
+  add_filter "/helpers/"
 end
