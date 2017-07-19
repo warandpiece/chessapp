@@ -79,7 +79,7 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe '#show' do
-    it 'something' do 
+    it "Should return http status 200" do 
       white_player = FactoryGirl.create(:white_player)
       sign_in white_player
       game = FactoryGirl.create(:game, white_player: white_player)

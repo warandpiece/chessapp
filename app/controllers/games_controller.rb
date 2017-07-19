@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by(id: params[:id])
+    @users_game = (current_user.game_id.nil?) ? Game.new : Game.find(current_user.game_id)
     @pieces = Piece.where(game_id:  @game.id)
   end
 
@@ -16,8 +16,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new(game_params)
-
+    @game = current_user.games.create(game_params)
+    #@game = Game.create(game_params)
     if @game.save
       render :show, status: :created
       #redirect_to @game, notice: 'Game was successfully created.'
