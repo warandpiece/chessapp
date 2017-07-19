@@ -1,22 +1,6 @@
 <h1 class="text-center">Chessboard</h1>
 
-<!-- move to show -->
-
-<table cellspacing="0" cellpadding="0" class="chessboard">
-  <% 7.downto(0) do |row| %>
-    <tr>
-      <% 0.upto(7) do |col| %>
-        <td class="text-center">
-          <%=
-            if (props = piece_at_location?(@pieces, row, col))
-              color = props[0]
-              type = props[1]
-              image_tag("#{color}-#{type}.svg")
-            else
-            end
-          %>
-        </td>
-      <% end %>
-    </tr>
-  <% end %>
-</table>
+<%= simple_form_for @game do |f| %>
+  <%= f.input :name %>
+  <%= f.button :submit %>
+<% end %>
