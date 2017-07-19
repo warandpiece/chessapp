@@ -2,8 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @game = Game.all
-    # or Game.available?
+    @games = Game.all
   end
 
   def show
@@ -16,12 +15,14 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = current_user.games.create(game_params)
-    #@game = Game.create(game_params)
+    @game = Game.new(game_params)
+
     if @game.save
+      puts "Save Successful"
       render :show, status: :created
       #redirect_to @game, notice: 'Game was successfully created.'
     else
+      puts "Try again"
       render :new, status: :unprocessable_entity # 422
     end
   end

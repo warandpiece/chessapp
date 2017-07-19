@@ -13,6 +13,6 @@ class Game < ApplicationRecord
 
   private
   def set_game_board
-    GameBoard.make_board(:white_player_id, :game_id)
+    GameBoard.make_board(self)
   end
 end

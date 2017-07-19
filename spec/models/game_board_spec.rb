@@ -19,12 +19,22 @@ RSpec.describe GameBoard, type: :model do
     end
   end
 
+  describe "#make_board" do
+    it "should increase Piece count by 32" do
+      game = FactoryGirl.create(:game)
+
+      GameBoard.make_board(game)
+
+      expect(Piece.where(game_id: game.id).count).to eq(32)
+    end
+  end
+
   describe '#make_rook' do
     it 'should add rooks to the correct positions' do
       game = FactoryGirl.create(:game)
       rook_positions = [{ x: 0, y: 0 }, { x: 7, y: 0 }, { x: 0, y: 7 }, { x: 7, y: 7 }]
 
-      GameBoard.make_rook(game.white_player_id, game.id)
+      GameBoard.make_rook(game)
 
       rook_positions.each do |position|
         expect(Rook.exists?(current_position_x: position[:x],
@@ -38,7 +48,7 @@ RSpec.describe GameBoard, type: :model do
       game = FactoryGirl.create(:game)
       knight_positions = [{ x: 1, y: 0 }, { x: 6, y: 0 }, { x: 1, y: 7 }, { x: 6, y: 7 }]
 
-      GameBoard.make_knight(game.white_player_id, game.id)
+      GameBoard.make_knight(game)
 
       knight_positions.each do |position|
         expect(Knight.exists?(current_position_x: position[:x],
@@ -52,7 +62,7 @@ RSpec.describe GameBoard, type: :model do
       game = FactoryGirl.create(:game)
       bishop_positions = [{ x: 2, y: 0 }, { x: 5, y: 0 }, { x: 2, y: 7 }, { x: 2, y: 7 }]
 
-      GameBoard.make_bishop(game.white_player_id, game.id)
+      GameBoard.make_bishop(game)
 
       bishop_positions.each do |position|
         expect(Bishop.exists?(current_position_x: position[:x],
@@ -66,7 +76,7 @@ RSpec.describe GameBoard, type: :model do
       game = FactoryGirl.create(:game)
       queen_positions = [{ x: 3, y: 0 }, { x: 3, y: 7 }]
 
-      GameBoard.make_queen(game.white_player_id, game.id)
+      GameBoard.make_queen(game)
 
       queen_positions.each do |position|
         expect(Queen.exists?(current_position_x: position[:x],
@@ -80,7 +90,7 @@ RSpec.describe GameBoard, type: :model do
       game = FactoryGirl.create(:game)
       king_positions = [{ x: 4, y: 0 }, { x: 4, y: 7 }]
 
-      GameBoard.make_king(game.white_player_id, game.id)
+      GameBoard.make_king(game)
 
       king_positions.each do |position|
         expect(King.exists?(current_position_x: position[:x],
@@ -99,7 +109,7 @@ RSpec.describe GameBoard, type: :model do
                         { x: 4, y: 6}, { x: 5, y: 6}, { x: 6, y: 6}, 
                         { x: 7, y: 6}]
                         
-      GameBoard.make_pawn(game.white_player_id, game.id)
+      GameBoard.make_pawn(game)
 
       pawn_positions.each do |position|
         expect(Pawn.exists?(current_position_x: position[:x],
