@@ -8,9 +8,8 @@
           <%=
             if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
-              type = props[1]
+              type = props[1].downcase
               image_tag("#{color}-#{type}.svg")
-            else
             end
           %>
         </td>
