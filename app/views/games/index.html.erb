@@ -1,6 +1,11 @@
-<h1>List available games here</h1>
+<div>
+  <div>
+    <h1>Available Games To Join</h1>
+  </div>
 
-<% @games.each do |game| %>
-  <%= link_to game.name, game_path(game) %>
-  <br>
-<% end %>
+  <% @games.each do |game| %>
+    <%= link_to game.name, game_path(game) %>
+    <br>
+  <% end %>
+
+</div>
