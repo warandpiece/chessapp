@@ -19,6 +19,10 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.white_player_id = current_user.id
 
+    @game.white_player_id = current_user.id
+    @game.black_player_id = current_user.id
+    @game.game_status = "Unknown"
+
     if @game.save
       redirect_to @game, status: :created, notice: 'Game was successfully created.'
     else
@@ -41,6 +45,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:white_player_id, :black_player_id, :game_status)
+    params.require(:game).permit(:white_player_id, :black_player_id, :game_status, :name)
   end
 end

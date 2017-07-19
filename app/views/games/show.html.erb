@@ -1,4 +1,9 @@
-<h2 class="text-center">Chessboard</h2>
+<div class="text-center">
+  <br>
+  <!-- <%= @game.name %> -->
+  <br>
+  <%= @game.game_status %>
+</div>
 
 <table cellspacing="0" cellpadding="0" class="chessboard">
   <% 7.downto(0) do |row| %>
