@@ -7,8 +7,6 @@ class Game < ApplicationRecord
 
   after_create :set_game_board
 
-  validates :white_player, presence: true
-  validates :black_player, presence: true
   validates :game_status, presence: true
 
   private

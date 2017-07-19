@@ -19,16 +19,6 @@ RSpec.describe GameBoard, type: :model do
     end
   end
 
-  describe "#make_board" do
-    it "should increase Piece count by 32" do
-      game = FactoryGirl.create(:game)
-
-      GameBoard.make_board(game)
-
-      expect(Piece.where(game_id: game.id).count).to eq(32)
-    end
-  end
-
   describe '#make_rook' do
     it 'should add rooks to the correct positions' do
       game = FactoryGirl.create(:game)

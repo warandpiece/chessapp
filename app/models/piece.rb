@@ -25,7 +25,10 @@ class Piece < ApplicationRecord
   def is_vertical_move_blocked(destination_y)
     destination_y > self.current_position_y ? dir_y = 1 : dir_y = -1
     (1..(destination_y - self.current_position_y).abs).each do |i|
+      puts "destination_y: #{destination_y}"
+      puts "current_position_y: #{current_position_y}"
       y = self.current_position_y + i * dir_y
+      puts "y: #{y}"
       return true if Piece.find_by(current_position_x: self.current_position_x, current_position_y: y)
     end
     false

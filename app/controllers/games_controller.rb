@@ -6,8 +6,9 @@ class GamesController < ApplicationController
   end
 
   def show
-    @users_game = (current_user.game_id.nil?) ? Game.new : Game.find(current_user.game_id)
-    @pieces = Piece.where(game_id:  @game.id)
+    @game = Game.find_by(id: params[:id])
+    @game = Game.new if @game.nil?
+    @pieces = Piece.where(game_id: @game.id)
   end
 
   def new
@@ -18,13 +19,12 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
 
     if @game.save
-      puts "Save Successful"
-      render :show, status: :created
-      #redirect_to @game, notice: 'Game was successfully created.'
+      redirect_to @game, status: :created, notice: 'Game was successfully created.'
     else
       puts "Try again"
       render :new, status: :unprocessable_entity # 422
     end
+
   end
 
   def update
