@@ -45,7 +45,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'should save to database with invalid game_status' do
+      it 'should not save to database with invalid game_status' do
         white_player = FactoryGirl.create(:white_player)
         black_player = FactoryGirl.create(:black_player)
         sign_in white_player
