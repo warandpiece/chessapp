@@ -1,10 +1,9 @@
-Show page, user is logged in to see their games?
-/games/:id
-
-<br>
-<%= @game.name %>
-<br>
-<%= @game.game_status %>
+<div class="text-center">
+  <br>
+  <%= @game.name %>
+  <br>
+  <%= @game.game_status %>
+</div>
 
 <table cellspacing="0" cellpadding="0" class="chessboard">
   <% 7.downto(0) do |row| %>
