@@ -45,7 +45,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'should not save to database with invalid game_status' do
+      it 'should save to database with invalid game_status' do
         white_player = FactoryGirl.create(:white_player)
         black_player = FactoryGirl.create(:black_player)
         sign_in white_player
@@ -53,27 +53,27 @@ RSpec.describe GamesController, type: :controller do
         expect do
           post :create, params: { game: { white_player_id: white_player,
                                           black_player_id: black_player, game_status: '' } }
-        end.to change { Game.count }.by(0)
+        end.to change { Game.count }.by(1)
       end
 
-      it 'should not save to database with invalid white_player' do
+      it 'should save to database with invalid white_player' do
         black_player = FactoryGirl.create(:black_player)
         sign_in black_player
 
         expect do
           post :create, params: { game: { white_player_id: nil,
                                           black_player_id: black_player, game_status: 'In Play' } }
-        end.to change { Game.count }.by(0)
+        end.to change { Game.count }.by(1)
       end
 
-      it 'should not save to database with invalid black_player' do
+      it 'should save to database with invalid black_player' do
         white_player = FactoryGirl.create(:white_player)
         sign_in white_player
 
         expect do
           post :create, params: { game: { white_player_id: white_player,
                                           black_player_id: nil, game_status: 'In Play' } }
-        end.to change { Game.count }.by(0)
+        end.to change { Game.count }.by(1)
       end
     end
   end
