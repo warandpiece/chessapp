@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find_by(id: params[:id])
     @game = Game.create(white_player_id: current_user.id, black_player_id: current_user.id) if @game.nil?
-    @pieces = GameBoard.make_board(@game)
+    @pieces = Piece.where(game_id: @game.id)
   end
 
   def new
