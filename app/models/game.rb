@@ -18,4 +18,4 @@ class Game < ApplicationRecord
   def set_game_board
     GameBoard.make_board(self)
   end
-end
+end 
