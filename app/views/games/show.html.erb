@@ -1,2 +1,24 @@
-Show page, user is logged in to see their games?
-/games/:id
+<div class="text-center">
+  <br>
+  <!-- <%= @game.name %> -->
+  <br>
+  <%= @game.game_status %>
+</div>
+
+<table cellspacing="0" cellpadding="0" class="chessboard">
+  <% 7.downto(0) do |row| %>
+    <tr>
+      <% 0.upto(7) do |col| %>
+        <td class="text-center">
+          <%=
+            if (props = piece_at_location?(@pieces, row, col))
+              color = props[0]
+              type = props[1].downcase
+              image_tag("#{color}-#{type}.svg")
+            end
+          %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

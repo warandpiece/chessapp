@@ -21,10 +21,10 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_rook' do
     it 'should add rooks to the correct positions' do
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       rook_positions = [{ x: 0, y: 0 }, { x: 7, y: 0 }, { x: 0, y: 7 }, { x: 7, y: 7 }]
 
-      GameBoard.make_rook(game.white_player_id, game.id)
+      GameBoard.make_rook(game)
 
       rook_positions.each do |position|
         expect(Rook.exists?(current_position_x: position[:x],
@@ -35,10 +35,10 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_knight' do
     it 'should add knights to the correct positions' do
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       knight_positions = [{ x: 1, y: 0 }, { x: 6, y: 0 }, { x: 1, y: 7 }, { x: 6, y: 7 }]
 
-      GameBoard.make_knight(game.white_player_id, game.id)
+      GameBoard.make_knight(game)
 
       knight_positions.each do |position|
         expect(Knight.exists?(current_position_x: position[:x],
@@ -49,10 +49,10 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_bishop' do
     it 'should add bishops to the correct positions' do
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       bishop_positions = [{ x: 2, y: 0 }, { x: 5, y: 0 }, { x: 2, y: 7 }, { x: 2, y: 7 }]
 
-      GameBoard.make_bishop(game.white_player_id, game.id)
+      GameBoard.make_bishop(game)
 
       bishop_positions.each do |position|
         expect(Bishop.exists?(current_position_x: position[:x],
@@ -63,10 +63,10 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_queen' do
     it 'should add queens to the correct positions' do 
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       queen_positions = [{ x: 3, y: 0 }, { x: 3, y: 7 }]
 
-      GameBoard.make_queen(game.white_player_id, game.id)
+      GameBoard.make_queen(game)
 
       queen_positions.each do |position|
         expect(Queen.exists?(current_position_x: position[:x],
@@ -77,10 +77,10 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_king' do
     it 'should add kings to the correct positions' do
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       king_positions = [{ x: 4, y: 0 }, { x: 4, y: 7 }]
 
-      GameBoard.make_king(game.white_player_id, game.id)
+      GameBoard.make_king(game)
 
       king_positions.each do |position|
         expect(King.exists?(current_position_x: position[:x],
@@ -91,7 +91,7 @@ RSpec.describe GameBoard, type: :model do
 
   describe '#make_pawn' do
     it 'should add pawns to the correct positions' do
-      game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game, :full)
       pawn_positions = [{ x: 0, y: 1}, { x: 1, y: 1}, { x: 2, y: 1}, 
                         { x: 3, y: 1}, { x: 4, y: 1}, { x: 5, y: 1}, 
                         { x: 6, y: 1}, { x: 7, y: 1}, { x: 0, y: 6}, 
@@ -99,7 +99,7 @@ RSpec.describe GameBoard, type: :model do
                         { x: 4, y: 6}, { x: 5, y: 6}, { x: 6, y: 6}, 
                         { x: 7, y: 6}]
                         
-      GameBoard.make_pawn(game.white_player_id, game.id)
+      GameBoard.make_pawn(game)
 
       pawn_positions.each do |position|
         expect(Pawn.exists?(current_position_x: position[:x],
