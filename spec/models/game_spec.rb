@@ -13,6 +13,8 @@ RSpec.describe Game, type: :model do
 
       expect(game).to receive(:set_game_board)
       game.save
+    end
+  end
 
   describe Game, "scope" do
     it "Show games with white and black player present as closed" do

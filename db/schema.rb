@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170719193846) do
     t.string   "game_status",     default: "Open"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.string   "name"
   end
 
   create_table "moves", force: :cascade do |t|

@@ -43,19 +43,6 @@ RSpec.describe GamesController, type: :controller do
         end.to change(Game, :count).by(1)
       end
     end
-
-    context 'with invalid params' do
-      it 'should not save to database with invalid game_status' do
-        white_player = FactoryGirl.create(:white_player)
-        black_player = FactoryGirl.create(:black_player)
-        sign_in white_player
-
-        expect do
-          post :create, params: { game: { white_player_id: white_player,
-                                          black_player_id: black_player, game_status: '' } }
-        end.to change { Game.count }.by(1)
-      end
-    end
   end
 
   describe '#show' do
