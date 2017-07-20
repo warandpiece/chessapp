@@ -156,9 +156,7 @@ RSpec.describe Piece, type: :model do
 #         expect(bishop4.is_move_blocked(dest_x ,dest_y)).to be false
 #       end
 #     end
-#   end
-
-
+#  end
 end
 
 
