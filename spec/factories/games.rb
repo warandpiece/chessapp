@@ -21,7 +21,6 @@ FactoryGirl.define do
     end
 
     trait :no_pieces do
-
       after(:create) {|instance| instance.pieces.destroy_all}
     end
   end
