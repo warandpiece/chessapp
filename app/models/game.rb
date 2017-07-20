@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
-  belongs_to :white_player, class_name: 'User'
-  belongs_to :black_player, class_name: 'User'
+  belongs_to :white_player, class_name: 'User', optional: true
+  belongs_to :black_player, class_name: 'User', optional: true
+
   has_many :pieces
   has_many :moves
   has_one :game_board
@@ -14,3 +15,4 @@ class Game < ApplicationRecord
     GameBoard.make_board(self)
   end
 end
+

@@ -45,7 +45,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'should save to database with invalid game_status' do
+      it 'should not save to database with invalid game_status' do
         white_player = FactoryGirl.create(:white_player)
         black_player = FactoryGirl.create(:black_player)
         sign_in white_player
@@ -62,7 +62,7 @@ RSpec.describe GamesController, type: :controller do
     it "Should return http status 200" do 
       white_player = FactoryGirl.create(:white_player)
       sign_in white_player
-      game = FactoryGirl.create(:game, white_player: white_player)
+      game = FactoryGirl.create(:game, :no_bl)
 
       get :show, params: {id: game.id}
 
@@ -75,7 +75,7 @@ RSpec.describe GamesController, type: :controller do
       it 'should update the database' do
         white_player = FactoryGirl.create(:white_player)
         sign_in white_player
-        game = FactoryGirl.create(:game, white_player: white_player)
+        game = FactoryGirl.create(:game, :full)
 
         put :update, params: { id: game.to_param, game: { game_status: 'White in Check' } }
 
