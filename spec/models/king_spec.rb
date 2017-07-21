@@ -120,8 +120,6 @@ RSpec.describe King, type: :model do
       it " should be false for multiple square move to lower left" do
         expect(king.valid_move_king?(dest_x_left, dest_y_bottom)).to be false
       end
-
     end
-
   end
 end
