@@ -5,12 +5,12 @@ FactoryGirl.define do
   end
 
   factory :rook do
-    game { FactoryGirl.create(:game, :no_bl) }
+    game { FactoryGirl.create(:game, :no_pieces) }
     user { FactoryGirl.create(:white_player) }
   end
 
   factory :bishop do
-    game { FactoryGirl.create(:game, :no_bl) }
+    game { FactoryGirl.create(:game, :no_pieces) }
     user { FactoryGirl.create(:white_player) }
   end
 end

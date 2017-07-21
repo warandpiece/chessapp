@@ -1,6 +1,6 @@
 <div class="text-center">
   <br>
-  <%= @game.name %>
+  <!-- <%= @game.name %> -->
   <br>
   <%= @game.game_status %>
 </div>
@@ -11,11 +11,10 @@
       <% 0.upto(7) do |col| %>
         <td class="text-center">
           <%=
-            if (props = piece_at_location?(@game.all_pieces, row, col))
+            if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
-              type = props[1]
+              type = props[1].downcase
               image_tag("#{color}-#{type}.svg")
-            else
             end
           %>
         </td>
