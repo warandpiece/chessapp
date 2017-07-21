@@ -19,5 +19,9 @@ FactoryGirl.define do
     trait :no_players do
       game_status "Open"
     end
+
+    trait :no_pieces do
+      after(:create) {|instance| instance.pieces.destroy_all}
+    end
   end
 end
