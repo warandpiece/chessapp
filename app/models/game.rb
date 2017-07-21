@@ -14,6 +14,10 @@ class Game < ApplicationRecord
   validates :black_player, presence: true, allow_blank: true
   validates :game_status, presence: true
 
+  def turn_change
+    self.turn == "white" ? self.turn = "black" : self.turn = "white"
+  end
+
   private
   def set_game_board
     GameBoard.make_board(self)
