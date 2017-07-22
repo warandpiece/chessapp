@@ -13,11 +13,14 @@ class Piece < ApplicationRecord
   scope :knights, -> { where(piece_type: 'Knight') }
   scope :pawns,   -> { where(piece_type: 'Pawn') }
 
+  # VALID_MOVE METHOD
+
   def valid_move?(destination_x, destination_y)
-    destination_x.between?(0, 7) && 
-    destination_y.between?(0, 7) &&
+    destination_x.between?(0, 7) && destination_y.between?(0, 7) &&
     is_move_blocked(destination_x, destination_y) == false
   end
+
+  # MOVE_BLOCKED METHODS
 
   def is_horizontal_move_blocked(destination_x)    
     destination_x > self.current_position_x ? dir_x = 1 : dir_x = -1

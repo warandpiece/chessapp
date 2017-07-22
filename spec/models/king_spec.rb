@@ -5,6 +5,8 @@ RSpec.describe King, type: :model do
     expect(King.superclass).to eq(Piece)
   end
 
+  # VALID KING MOVES
+
   describe "#valid_move_king? true" do 
     context "vertical moves" do 
       let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
@@ -64,6 +66,8 @@ RSpec.describe King, type: :model do
     end
   end
 
+  # INVALID KING MOVES
+
   describe "#valid_move_king? false" do
     context "more than one square vertically" do
       let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
@@ -120,8 +124,6 @@ RSpec.describe King, type: :model do
       it " should be false for multiple square move to lower left" do
         expect(king.valid_move_king?(dest_x_left, dest_y_bottom)).to be false
       end
-
     end
-
   end
 end
