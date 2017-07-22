@@ -5,7 +5,9 @@ RSpec.describe Knight, type: :model do
     expect(Knight.superclass).to eq(Piece)
   end
 
-   describe "#valid_move_knight?" do 
+  # VALID KNIGHT MOVES
+
+  describe "#valid_move_knight?" do 
     context "8 point star" do 
       let!(:knight) { FactoryGirl.create(:knight, current_position_x: 3, 
                                                   current_position_y: 3) }

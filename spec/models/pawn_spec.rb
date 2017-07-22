@@ -5,7 +5,6 @@ RSpec.describe Pawn, type: :model do
     expect(Pawn.superclass).to eq(Piece)
   end
 
-
   describe "#valid_move_pawn?" do
 
     # FIRST MOVE VALID

@@ -9,12 +9,12 @@ RSpec.describe Bishop, type: :model do
     expect { FactoryGirl.create(:bishop) }.to change { Piece.count }
   end
 
-# SHOULD MOVE DIAGONALLY
+  # SHOULD MOVE DIAGONALLY
 
   describe "#valid_move_bishop? true" do 
     context "diagonal moves" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                  current_position_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y_top) { 5 }
@@ -37,11 +37,11 @@ RSpec.describe Bishop, type: :model do
       end
     end
 
-# SHOULD NOT MOVE VERTICALLY OR HORIZONTALLY
+    # SHOULD NOT MOVE VERTICALLY OR HORIZONTALLY
 
     context "Should not move vertically" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                  current_position_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 5 }
       let(:dest_y_bottom) { 1 }
@@ -57,7 +57,7 @@ RSpec.describe Bishop, type: :model do
 
     context "should not move horizontally" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                  current_position_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y) { 3 }

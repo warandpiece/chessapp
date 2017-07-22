@@ -10,7 +10,7 @@ RSpec.describe Queen, type: :model do
   describe "#valid_move_queen? true" do 
     context "vertical moves" do 
       let!(:queen) { FactoryGirl.create(:queen, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                current_position_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 5 }
       let(:dest_y_bottom) { 1 }
@@ -28,7 +28,7 @@ RSpec.describe Queen, type: :model do
 
     context "horizontal moves" do 
       let!(:queen) { FactoryGirl.create(:queen, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                current_position_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y) { 3 }
@@ -46,7 +46,7 @@ RSpec.describe Queen, type: :model do
 
     context "diagonal moves" do 
       let!(:queen) { FactoryGirl.create(:queen, current_position_x: 3, 
-                                              current_position_y: 3) }
+                                                current_position_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y_top) { 5 }

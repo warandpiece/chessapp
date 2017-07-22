@@ -1,5 +1,5 @@
 class Pawn < Piece
-  # PAWNS MOVE ONE OR TWO SQUARES VERTICALLY ON FIRST MOVE
+  # PAWNS MOVE ONE OR TWO SQUARES FORWARD ON FIRST MOVE
   # OTHERWISE CAN ONLY MOVE ONE SQUARE FORWARD
   def valid_move_pawn?(destination_x, destination_y)
     return false if valid_move?(destination_x, destination_y) == false
