@@ -35,15 +35,15 @@ RSpec.describe Piece, type: :model do
       end
 
       it "should be false for off board move to left" do 
-        expect(king1.valid_move?(dest_x_offboard_left, current_y_king1)).to be false
+        expect(king1.valid_move_king?(dest_x_offboard_left, current_y_king1)).to be false
       end
 
       it "should be false for off board move to top" do 
-        expect(king2.valid_move?(current_x_king2, dest_y_offboard_top)).to be false
+        expect(king2.valid_move_king?(current_x_king2, dest_y_offboard_top)).to be false
       end
 
       it "should be false for off board move to bottom" do 
-        expect(king1.valid_move?(current_x_king1, dest_y_offboard_bottom)).to be false
+        expect(king1.valid_move_king?(current_x_king1, dest_y_offboard_bottom)).to be false
       end
     end
   end
