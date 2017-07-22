@@ -14,8 +14,7 @@ class Piece < ApplicationRecord
   scope :pawns,   -> { where(piece_type: 'Pawn') }
 
   def valid_move?(destination_x, destination_y)
-    destination_x.between?(0, 7) && 
-    destination_y.between?(0, 7) &&
+    destination_x.between?(0, 7) && destination_y.between?(0, 7) &&
     is_move_blocked(destination_x, destination_y) == false
   end
 

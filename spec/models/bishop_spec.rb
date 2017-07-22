@@ -39,7 +39,7 @@ RSpec.describe Bishop, type: :model do
 
 # SHOULD NOT MOVE VERTICALLY OR HORIZONTALLY
 
-    context "vertical moves" do 
+    context "Should not move vertically" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
                                               current_position_y: 3) }
       let(:dest_x) { 3 }
@@ -55,7 +55,7 @@ RSpec.describe Bishop, type: :model do
       end
     end
 
-    context "horizontal moves" do 
+    context "should not move horizontally" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
                                               current_position_y: 3) }
       let(:dest_x_right) { 5 }

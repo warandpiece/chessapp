@@ -1,6 +1,6 @@
 class Knight < Piece
   def valid_move_knight?(destination_x, destination_y)
-    return false if valid_move?(destination_x, destination_y) == false
+    destination_x.between?(0, 7) && destination_y.between?(0, 7) &&
     ((self.current_position_x - destination_x).abs == 2 &&
           (self.current_position_y - destination_y).abs == 1) ||
     ((self.current_position_x - destination_x).abs == 1 &&
