@@ -14,6 +14,25 @@ class Game < ApplicationRecord
   validates :black_player, presence: true, allow_blank: true
   validates :game_status, presence: true
 
+  def check
+    white_king_x = Piece.where(game_id: game.id, piece_type: "King", 
+                               piece_color: "white").last.current_position_x
+    white_king_y = Piece.where(game_id: game.id, piece_type: "King", 
+                               piece_color: "white").last.current_position_y
+    black_king_x = Piece.where(game_id: game.id, piece_type: "King", 
+                               piece_color: "black").last.current_position_x
+    black_king_y = Piece.where(game_id: game.id, piece_type: "King", 
+                               piece_color: "black").last.current_position_y
+
+    Piece.where(game_id: game.id).each do |piece|
+      if piece.piece_color == "white"
+         return "white_player in check" if piece.valid_move?(black_king_x, black_king_y) == true
+      elsif piece.piece_color == "black"
+        return "black_player in check" if piece.valid_move?(white_king_x, white_king_y) == true
+      end
+    end
+  end
+
   private
   def set_game_board
     GameBoard.make_board(self)
