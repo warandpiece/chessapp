@@ -5,7 +5,7 @@ RSpec.describe Pawn, type: :model do
     expect(Pawn.superclass).to eq(Piece)
   end
 
-  describe "#valid_move_pawn?" do
+  describe "#valid_move?" do
 
     # FIRST MOVE VALID
 
@@ -23,13 +23,13 @@ RSpec.describe Pawn, type: :model do
       let(:y_minus_2) { 4 }
 
       it "white pawn first move valid" do
-        expect(pawn1.valid_move_pawn?(current_position_x, y_plus_1)).to be true
-        expect(pawn1.valid_move_pawn?(current_position_x, y_plus_2)).to be true
+        expect(pawn1.valid_move?(current_position_x, y_plus_1)).to be true
+        expect(pawn1.valid_move?(current_position_x, y_plus_2)).to be true
       end
 
       it "black pawn first move valid" do
-        expect(pawn2.valid_move_pawn?(current_position_x, y_minus_1)).to be true
-        expect(pawn2.valid_move_pawn?(current_position_x, y_minus_1)).to be true
+        expect(pawn2.valid_move?(current_position_x, y_minus_1)).to be true
+        expect(pawn2.valid_move?(current_position_x, y_minus_1)).to be true
       end
     end
 
@@ -48,11 +48,11 @@ RSpec.describe Pawn, type: :model do
       let(:y_minus_3) { 3 }
 
       it "white pawn first move invalid with 3 squares" do
-        expect(pawn1.valid_move_pawn?(white_current_x, y_plus_3)).to be false
+        expect(pawn1.valid_move?(white_current_x, y_plus_3)).to be false
       end
 
       it "black pawn first move valid" do
-        expect(pawn2.valid_move_pawn?(black_current_x, y_minus_3)).to be false
+        expect(pawn2.valid_move?(black_current_x, y_minus_3)).to be false
       end
     end
 
@@ -70,11 +70,11 @@ RSpec.describe Pawn, type: :model do
       let(:black_y_plus_1) { 5 }
 
       it "white pawn should not move backwards" do
-        expect(pawn1.valid_move_pawn?(current_position_x, white_y_minus_1)).to be false
+        expect(pawn1.valid_move?(current_position_x, white_y_minus_1)).to be false
       end
 
       it "black pawn first move valid" do
-        expect(pawn2.valid_move_pawn?(current_position_x, black_y_plus_1)).to be false
+        expect(pawn2.valid_move?(current_position_x, black_y_plus_1)).to be false
       end
     end
 
@@ -88,11 +88,11 @@ RSpec.describe Pawn, type: :model do
       let(:dest_y) { 3 }
 
       it "moves right 1" do
-        expect(pawn.valid_move_pawn?(dest_x_right, dest_y)).to be false
+        expect(pawn.valid_move?(dest_x_right, dest_y)).to be false
       end
 
       it "moves left 1" do
-        expect(pawn.valid_move_pawn?(dest_x_left, dest_y)).to be false
+        expect(pawn.valid_move?(dest_x_left, dest_y)).to be false
       end
     end
 
@@ -110,8 +110,8 @@ RSpec.describe Pawn, type: :model do
       let(:y_minus_2) { 3 }
 
       it "white pawn first move valid" do
-        expect(pawn1.valid_move_pawn?(current_position_x, y_plus_2)).to be false
-        expect(pawn2.valid_move_pawn?(current_position_x, y_minus_2)).to be false
+        expect(pawn1.valid_move?(current_position_x, y_plus_2)).to be false
+        expect(pawn2.valid_move?(current_position_x, y_minus_2)).to be false
       end
     end
   end
