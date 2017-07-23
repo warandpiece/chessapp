@@ -26,11 +26,12 @@ class Game < ApplicationRecord
 
     Piece.where(game_id: game.id).each do |piece|
       if piece.piece_color == "white"
-         return "white_player in check" if piece.valid_move?(black_king_x, black_king_y) == true
+         return :white_player if piece.valid_move?(black_king_x, black_king_y) == true
       elsif piece.piece_color == "black"
-        return "black_player in check" if piece.valid_move?(white_king_x, white_king_y) == true
+        return :black_player if piece.valid_move?(white_king_x, white_king_y) == true
       end
     end
+    return false
   end
 
   private
