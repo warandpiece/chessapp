@@ -16,17 +16,17 @@ class Game < ApplicationRecord
 
   def check
     white_king_x = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "white").last.current_position_x
+                               piece_color: "white").current_position_x
     white_king_y = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "white").last.current_position_y
+                               piece_color: "white").current_position_y
     black_king_x = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "black").last.current_position_x
+                               piece_color: "black").current_position_x
     black_king_y = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "black").last.current_position_y
+                               piece_color: "black").current_position_y
 
     Piece.where(game_id: game.id).each do |piece|
       if piece.piece_color == "white"
-         return :white_player if piece.valid_move?(black_king_x, black_king_y) == true
+        return :white_player if piece.valid_move?(black_king_x, black_king_y) == true
       elsif piece.piece_color == "black"
         return :black_player if piece.valid_move?(white_king_x, white_king_y) == true
       end
