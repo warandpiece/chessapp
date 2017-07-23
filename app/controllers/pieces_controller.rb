@@ -12,7 +12,6 @@ class PiecesController < ApplicationController
     else
       render :new, status: :unprocessable_entity # 422
     end
-
   end
 
   def update
@@ -25,6 +24,6 @@ class PiecesController < ApplicationController
 
   def piece_params
     params.require(:piece).permit(:piece_type, :piece_color, :current_position_x, 
-        :current_position_y, :starting_position_x, :starting_position_y)
+        :current_position_y)
   end
 end

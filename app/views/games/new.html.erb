@@ -1,35 +1,12 @@
-<!-- keep this in #new -->
+<div class="row text-center small-4 large-4 columns">
+  <div class="new-game-form">
 
-<!-- <div>
-  <div class="text-center">
-    <h2>Welcome to your new game!</h2>
-      <%= simple_form_for @game do |f| %>
+    <h3>Please name your game</h3>
 
-      <%= f.input :white_player_id, :as => :hidden, :input_html => { :value => current_user.id } %>
-      <br />
-      <%= f.submit 'Create' %>
-    <% end %></div>
-</div> -->
+    <%= simple_form_for @game do |f| %>
+      <%= f.input :name %>
+      <%= f.button :submit %>
+    <% end %>
 
-<!-- this will need to be moved to show -->
-
-<h2 class="text-center">Chessboard</h2>
-
-<table cellspacing="0" cellpadding="0" class="chessboard">
-  <% 7.downto(0) do |row| %>
-    <tr>
-      <% 0.upto(7) do |col| %>
-        <td class="text-center">
-          <%=
-            if (props = piece_at_location?(@pieces, row, col))
-              color = props[0]
-              type = props[1]
-              image_tag("#{color}-#{type}.svg")
-            else
-            end
-          %>
-        </td>
-      <% end %>
-    </tr>
-  <% end %>
-</table>
+  </div>
+</div>

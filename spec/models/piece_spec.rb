@@ -13,6 +13,41 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:rook) }.to change { Piece.count }
   end
 
+  # VALID MOVES
+
+  describe "valid_move?" do
+    context "off board" do
+      let!(:king1) { FactoryGirl.create(:king, current_position_x: 0, 
+                                               current_position_y: 0) }
+      let!(:king2) { FactoryGirl.create(:king, current_position_x: 7, 
+                                               current_position_y: 7) }
+      let(:current_x_king1) { 0 }
+      let(:current_x_king2) { 7 }
+      let(:dest_x_offboard_right) { 8 }
+      let(:dest_x_offboard_left) { -1 }
+      let(:current_y_king1) { 0 }
+      let(:current_y_king2) { 7 }      
+      let(:dest_y_offboard_top) { 8 }
+      let(:dest_y_offboard_bottom) { -1 }
+
+      it "should be false for off board move to right" do 
+        expect(king2.valid_move_king?(dest_x_offboard_right, current_y_king2)).to be false
+      end
+
+      it "should be false for off board move to left" do 
+        expect(king1.valid_move_king?(dest_x_offboard_left, current_y_king1)).to be false
+      end
+
+      it "should be false for off board move to top" do 
+        expect(king2.valid_move_king?(current_x_king2, dest_y_offboard_top)).to be false
+      end
+
+      it "should be false for off board move to bottom" do 
+        expect(king1.valid_move_king?(current_x_king1, dest_y_offboard_bottom)).to be false
+      end
+    end
+  end
+
 # HORIZONTAL OBSTRUCTION
 
   describe 'piece obstructed horizontally' do
@@ -156,9 +191,5 @@ end
         expect(bishop4.is_move_blocked(dest_x ,dest_y)).to be false
       end
     end
-  end
-
-
+ end
 end
-
-

@@ -1,8 +1,20 @@
-<div>
-  <div>
+<div class="container">
+  <div class="row text-center">
     <h1>Available Games To Join</h1>
   </div>
 
-  
-
- </div>
+  <div class="row text-center small-4 large-4 columns">
+    <% @games.each do |game| %>
+    <div class="new-game-form">
+      <h3>Game: <%= game.name %></h3>
+      <br/>
+      <h4>Opponent: <%= game.white_player.username %></h4>
+      <h5>Created: <%= game.created_at.strftime("%m-%d-%y") %></h4>
+      <br/>
+      <div>
+        <a class="button"<%= link_to 'JOIN GAME', game_path(game) %></a>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
