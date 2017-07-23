@@ -1,8 +1,8 @@
 class Pawn < Piece
   # PAWNS MOVE ONE OR TWO SQUARES FORWARD ON FIRST MOVE
   # OTHERWISE CAN ONLY MOVE ONE SQUARE FORWARD
-  def valid_move_pawn?(destination_x, destination_y)
-    return false if valid_move?(destination_x, destination_y) == false
+  def valid_move?(destination_x, destination_y)
+    return false if super(destination_x, destination_y) == false
     case
     when self.first_move == "first_move_white"
       (destination_y - self.current_position_y).between?(1, 2)
