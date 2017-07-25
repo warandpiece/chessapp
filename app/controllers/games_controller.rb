@@ -21,6 +21,7 @@ class GamesController < ApplicationController
     @game.black_player_id = current_user.id
 
     if @game.save
+      render :show
       redirect_to @game, status: :created, notice: 'Game was successfully created.'
     else
       puts "Try again"
