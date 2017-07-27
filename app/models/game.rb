@@ -15,20 +15,16 @@ class Game < ApplicationRecord
   validates :game_status, presence: true
 
   def check
-    white_king_x = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "white").current_position_x
-    white_king_y = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "white").current_position_y
-    black_king_x = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "black").current_position_x
-    black_king_y = Piece.where(game_id: game.id, piece_type: "King", 
-                               piece_color: "black").current_position_y
+    white_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "white")
+    black_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "black")
 
-    Piece.where(game_id: game.id).each do |piece|
+    Piece.where(game_id: self.id).each do |piece|
       if piece.piece_color == "white"
-        return :white_player if piece.valid_move?(black_king_x, black_king_y) == true
+        return :black_player, true if piece.valid_move?(black_king.current_position_x, 
+                                                  black_king.current_position_y)
       elsif piece.piece_color == "black"
-        return :black_player if piece.valid_move?(white_king_x, white_king_y) == true
+        return :white_player, true if piece.valid_move?(white_king.current_position_x, 
+                                                  white_king.current_position_y)
       end
     end
     return false
