@@ -13,8 +13,12 @@
           <%=
             if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
-              type = props[1].downcase
-              image_tag("#{color}-#{type}.svg")
+              if props[3] == :selected
+                color = props[0]
+              else
+                type = props[1].downcase
+                link_to image_tag("#{color}-#{type}.svg", border: 0), {action: 'update', controller: 'pieces', id: props[2]}, method: :put
+              end
             end
           %>
         </td>
