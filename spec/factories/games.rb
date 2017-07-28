@@ -21,6 +21,8 @@ FactoryGirl.define do
     end
 
     trait :no_pieces do
+      white_player { FactoryGirl.create(:white_player) }
+      black_player { FactoryGirl.create(:black_player) }
       after(:create) {|instance| instance.pieces.destroy_all}
     end
   end

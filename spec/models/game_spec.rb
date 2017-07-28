@@ -61,27 +61,53 @@ RSpec.describe Game, type: :model do
 
   # CHECK METHOD
 
-  describe "#check" do
-    context "" do                                     
-      it "white in check" do 
-        game = FactoryGirl.create(:game, :no_pieces)
-        king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
-                                   current_position_x: 3, current_position_y: 0)
-        rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
-                                   current_position_x: 0, current_position_y: 0)
+  describe "#check" do                                  
+    it "white in check" do 
+      game = FactoryGirl.create(:game, :no_pieces)
+      white_king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
+                          user_id: game.white_player_id, current_position_x: 4, 
+                          current_position_y: 0)
+      black_king = Piece.create(piece_type: 'King', piece_color: 'black', game_id: game.id,
+                          user_id: game.black_player_id, current_position_x: 4, 
+                          current_position_y: 7)
+      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
+                          user_id: game.black_player_id, current_position_x: 0, 
+                          current_position_y: 0)
 
-      # game = FactoryGirl.create(:game, :full)
-      # knight_positions = [{ x: 1, y: 0 }, { x: 6, y: 0 }, { x: 1, y: 7 }, { x: 6, y: 7 }]
 
-      # GameBoard.make_knight(game)
+      expect(game.check).to eq([:white_player, true])
+    end
 
-      # knight_positions.each do |position|
-      #   expect(Knight.exists?(current_position_x: position[:x],
-      #                         current_position_y: position[:y])).to eq(true)
-         
+    it "black in check" do 
+      game = FactoryGirl.create(:game, :no_pieces)
+      white_king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
+                          user_id: game.white_player_id, current_position_x: 4, 
+                          current_position_y: 0)
+      black_king = Piece.create(piece_type: 'King', piece_color: 'black', game_id: game.id,
+                          user_id: game.black_player_id, current_position_x: 4, 
+                          current_position_y: 7)
+      white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
+                          user_id: game.white_player_id, current_position_x: 0, 
+                          current_position_y: 7)
 
-        expect(game.check).to eq(:white_player)
-      end
+
+      expect(game.check).to eq([:black_player, true])
+    end
+
+    it "not in check" do 
+      game = FactoryGirl.create(:game, :no_pieces)
+      white_king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
+                          user_id: game.white_player_id, current_position_x: 4, 
+                          current_position_y: 0)
+      black_king = Piece.create(piece_type: 'King', piece_color: 'black', game_id: game.id,
+                          user_id: game.black_player_id, current_position_x: 4, 
+                          current_position_y: 7)
+      white_bishop = Piece.create(piece_type: 'Bishop', piece_color: 'white', game_id: game.id,
+                          user_id: game.white_player_id, current_position_x: 0, 
+                          current_position_y: 7)
+
+
+      expect(game.check).to eq(false)
     end
   end
 end
