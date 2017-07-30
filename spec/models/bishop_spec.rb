@@ -11,7 +11,7 @@ RSpec.describe Bishop, type: :model do
 
   # SHOULD MOVE DIAGONALLY
 
-  describe "#valid_move_bishop? true" do 
+  describe "#valid_move? true" do 
     context "diagonal moves" do 
       let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
                                                   current_position_y: 3) }
@@ -21,19 +21,19 @@ RSpec.describe Bishop, type: :model do
       let(:dest_y_bottom) { 1 }
 
       it "moves upper right" do
-        expect(bishop.valid_move_bishop?(dest_x_right, dest_y_top)).to be true
+        expect(bishop.valid_move?(dest_x_right, dest_y_top)).to be true
       end
 
       it "moves upper left" do
-        expect(bishop.valid_move_bishop?(dest_x_left, dest_y_top)).to be true
+        expect(bishop.valid_move?(dest_x_left, dest_y_top)).to be true
       end
 
       it "moves lower right" do
-        expect(bishop.valid_move_bishop?(dest_x_right, dest_y_bottom)).to be true
+        expect(bishop.valid_move?(dest_x_right, dest_y_bottom)).to be true
       end
 
       it "moves lower left" do
-        expect(bishop.valid_move_bishop?(dest_x_left, dest_y_bottom)).to be true
+        expect(bishop.valid_move?(dest_x_left, dest_y_bottom)).to be true
       end
     end
 
@@ -47,11 +47,11 @@ RSpec.describe Bishop, type: :model do
       let(:dest_y_bottom) { 1 }
 
       it "moves up 1" do
-        expect(bishop.valid_move_bishop?(dest_x, dest_y_top)).to be false
+        expect(bishop.valid_move?(dest_x, dest_y_top)).to be false
       end
 
       it "moves down 1" do
-        expect(bishop.valid_move_bishop?(dest_x, dest_y_bottom)).to be false
+        expect(bishop.valid_move?(dest_x, dest_y_bottom)).to be false
       end
     end
 
@@ -63,11 +63,11 @@ RSpec.describe Bishop, type: :model do
       let(:dest_y) { 3 }
 
       it "moves right 1" do
-        expect(bishop.valid_move_bishop?(dest_x_right, dest_y)).to be false
+        expect(bishop.valid_move?(dest_x_right, dest_y)).to be false
       end
 
       it "moves left 1" do
-        expect(bishop.valid_move_bishop?(dest_x_left, dest_y)).to be false
+        expect(bishop.valid_move?(dest_x_left, dest_y)).to be false
       end
     end
 
