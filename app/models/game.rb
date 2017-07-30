@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   has_many :moves
   has_one :game_board
 
-  scope :available, -> {where('black_player_id is NULL').or(where('white_player_id is NULL'))}
+  scope :available, -> { where(game_status: "Open") }
 
   after_create :set_game_board
 
