@@ -9,7 +9,7 @@ RSpec.describe King, type: :model do
 
   describe "CASTLING" do 
     let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                            current_position_y: 3) 
+                                            current_position_y: 3) }
     it "checks if king has never moved" do
       expect(king.has_moved?).to be false
     end
