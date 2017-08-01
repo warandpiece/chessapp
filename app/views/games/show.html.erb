@@ -32,6 +32,7 @@
     create: function(){$(this).data('position',$(this).position())},
     cursorAt:{left:15},
     cursor:'move',
+    containment: $('.chessboard'),
     start:function(){$(this).stop(true,true)}
   });
   

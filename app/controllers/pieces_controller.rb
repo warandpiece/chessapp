@@ -15,14 +15,10 @@ class PiecesController < ApplicationController
   end
 
   def update
-    puts "I am in the update method"
-    @piece = Piece.find(params[:id])
-    return render_not_found if @piece.blank?
-    # @piece.update_attributes(piece_params)
-  end
-
-  def show
-    render json: current_piece
+    piece = Piece.find(params[:id])
+    @game = piece.game
+    piece.update_attributes(piece_params)
+    redirect_to game_path(@game)
   end
 
   private
