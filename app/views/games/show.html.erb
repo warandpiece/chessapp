@@ -14,10 +14,10 @@
             if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
               if props[3] == :selected
-                color = props[0]
+                color = "red"
               else
                 type = props[1].downcase
-                link_to image_tag("#{color}-#{type}.svg", border: 0, class:'piece'), {action: 'update', controller: 'pieces', id: props[2]}, method: :put
+                link_to image_tag("#{color}-#{type}.svg", border: 0, class: 'piece'), {action: 'update', controller: 'pieces', id: props[2]}, method: :put
               end
             end
           %>
@@ -27,9 +27,23 @@
   <% end %>
 </table>
 
-
 <script>
-  $(function() {
-    $('.piece').draggable({});
+  $('.piece').draggable( {
+    create: function(){$(this).data('position',$(this).position())},
+    cursorAt:{left:15},
+    cursor:'move',
+    start:function(){$(this).stop(true,true)}
   });
+  
+  $('.chessboard').find('td').droppable({
+    drop:function(event, ui){
+      snapToMiddle(ui.draggable,$(this));
+    }
+  });
+
+  function snapToMiddle(dragger, target){
+     var topMove = target.position().top - dragger.data('position').top + (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
+      var leftMove= target.position().left - dragger.data('position').left + (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
+      dragger.animate({top:topMove,left:leftMove},{duration:600,easing:'easeOutBack'});
+  }
 </script>

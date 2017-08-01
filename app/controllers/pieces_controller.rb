@@ -16,12 +16,9 @@ class PiecesController < ApplicationController
 
   def update
     puts "I am in the update method"
-    @piece = Piece.find_by(id: params[:id])
+    @piece = Piece.find(params[:id])
     return render_not_found if @piece.blank?
-    @piece.update_attributes(piece_params)
-    # piece = current_piece
-    # @new_position_x = params[:current_position_x].to_i
-    # @new_position_y = params[:current_position_y].to_i
+    # @piece.update_attributes(piece_params)
   end
 
   def show
