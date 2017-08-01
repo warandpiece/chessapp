@@ -7,7 +7,21 @@ RSpec.describe King, type: :model do
 
   # VALID KING MOVES
 
+    describe "CASTLING" do 
+      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
+                                              current_position_y: 3) }
+      
+      #let(:dest_x) { 3 }
+      #let(:dest_y_top) { 4 }
+      #let(:dest_y_bottom) { 2 }
+
+      it "king has never moved" do
+        expect(king.has_moved?).to be false
+      end
+    end
+
   describe "#valid_move? true" do 
+
     context "vertical moves" do 
       let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
                                               current_position_y: 3) }
