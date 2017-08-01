@@ -68,3 +68,4 @@ gem 'codacy-coverage', :require => false
 gem "figaro"
 gem "font-awesome-rails"
 gem 'simple_form'
+gem 'jquery-ui-rails'

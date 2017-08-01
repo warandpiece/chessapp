@@ -17,7 +17,7 @@
                 color = props[0]
               else
                 type = props[1].downcase
-                link_to image_tag("#{color}-#{type}.svg", border: 0), {action: 'update', controller: 'pieces', id: props[2]}, method: :put
+                link_to image_tag("#{color}-#{type}.svg", border: 0, class:'piece'), {action: 'update', controller: 'pieces', id: props[2]}, method: :put
               end
             end
           %>
@@ -26,3 +26,10 @@
     </tr>
   <% end %>
 </table>
+
+
+<script>
+  $(function() {
+    $('.piece').draggable({});
+  });
+</script>
