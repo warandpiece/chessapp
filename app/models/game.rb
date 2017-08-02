@@ -18,6 +18,10 @@ class Game < ApplicationRecord
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
   end
 
+  def opposite_color
+    self.turn == "white" ? "black" : "white"
+  end
+
   def check
     white_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "white")
     black_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "black")
