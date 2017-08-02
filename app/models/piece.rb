@@ -13,6 +13,12 @@ class Piece < ApplicationRecord
   scope :knights, -> { where(piece_type: 'Knight') }
   scope :pawns,   -> { where(piece_type: 'Pawn') }
 
+  # PIECE_MOVED METHOD
+
+  def has_moved?
+    self.created_at != self.updated_at
+  end
+
   # VALID_MOVE METHOD
 
   def valid_move?(destination_x, destination_y)
