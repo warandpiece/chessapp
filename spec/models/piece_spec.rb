@@ -13,6 +13,60 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:rook) }.to change { Piece.count }
   end
 
+  it 'has valid factory' do
+    expect { FactoryGirl.create(:pawn) }.to change { Piece.count }
+  end
+
+  it 'has valid factory' do
+    expect { FactoryGirl.create(:queen) }.to change { Piece.count }
+  end
+
+  # PAWN PROMOTION
+
+  describe 'a queen is a queen' do
+    let!(:queen1) { FactoryGirl.create(:queen, current_position_x: 0, current_position_y: 0) }
+    it 'should just be' do
+      expect(queen1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'black pawn is promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+                   current_position_x: 0, current_position_y: 0) }
+    it 'should be promoted to queen' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'black pawn is NOT promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+                   current_position_x: 0, current_position_y: 2) }
+    it 'should still be a pawn' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Pawn"
+    end
+  end
+
+  describe 'white pawn is promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+                   current_position_x: 0, current_position_y: 7) }
+    it 'should be promoted to queen' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'white pawn is NOT promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+                   current_position_x: 0, current_position_y: 3) }
+    it 'should still be a pawn' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Pawn"
+    end
+  end
+
+
   # VALID MOVES
 
   describe "valid_move?" do
