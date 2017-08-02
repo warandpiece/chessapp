@@ -40,22 +40,22 @@ RSpec.describe Game, type: :model do
   describe Game, "scope" do
     it "Show games with white and black player present as closed" do
       game = FactoryGirl.create(:game, :full) 
-      expect(Game.available.map(&:id)[0]).to eq(nil)      
+      expect(Game.available.map(&:game_status)[0]).to eq(nil)
     end
 
     it "Shows games with white player present but no black player as open" do
       game = FactoryGirl.create(:game, :no_bl)
-      expect(Game.available.map(&:id)[0]).to eq(game.id)
+      expect(Game.available.map(&:game_status) [0]).to eq(game.game_status)
     end
 
     it "Shows games with white player not present but back player present as open" do
       game = FactoryGirl.create(:game, :no_wh)
-      expect(Game.available.map(&:id)[0]).to eq(game.id)
+      expect(Game.available.map(&:game_status) [0]).to eq(game.game_status)
     end
 
     it "Shows games with no white or black player present as open" do
-      game = FactoryGirl.create(:game, :no_players)
-      expect(Game.available.map(&:id)[0]).to eq(game.id)  
+      game = FactoryGirl.create(:game, :no_players) 
+      expect(Game.available.map(&:game_status) [0]).to eq(game.game_status)    
     end
   end
 
