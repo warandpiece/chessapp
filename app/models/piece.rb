@@ -18,7 +18,6 @@ class Piece < ApplicationRecord
   def valid_move?(destination_x, destination_y)
     destination_x.between?(0, 7) && destination_y.between?(0, 7) &&
     is_move_blocked(destination_x, destination_y) == false
-    # return false if move causes own king to be in check
   end
 
   # MOVE_BLOCKED METHODS
@@ -61,5 +60,4 @@ class Piece < ApplicationRecord
       return is_diagonal_move_blocked(destination_x, destination_y)
     end
   end
-
 end
