@@ -24,11 +24,9 @@ class Game < ApplicationRecord
 
     Piece.where(game_id: self.id).each do |piece|
       if piece.piece_color == "white"
-        return :black_player, true if piece.valid_move?(black_king.current_position_x, 
-                                                        black_king.current_position_y)
+        return :black_player, true if piece.valid_move?(black_king.current_x, black_king.current_y)
       elsif piece.piece_color == "black"
-        return :white_player, true if piece.valid_move?(white_king.current_position_x, 
-                                                        white_king.current_position_y)
+        return :white_player, true if piece.valid_move?(white_king.current_x, white_king.current_y)
       end
     end
     return false
