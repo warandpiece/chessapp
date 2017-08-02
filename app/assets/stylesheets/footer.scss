@@ -1,22 +1,11 @@
-.socks {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -4em;
-}
+$footer-color: #fcf4d4;
 
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fcf4d4;
+  margin-top: 10 px;
+  padding: 20px;
+  background-color: $footer-color;
 }
 
 footer ul {
   list-style: none;
 }
-
-
-/*footer, .push {
-  height: 4em;
-}*/
