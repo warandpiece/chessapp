@@ -1,3 +1,4 @@
+require 'pry'
 require 'rails_helper'
 
 RSpec.describe King, type: :model do
@@ -8,11 +9,52 @@ RSpec.describe King, type: :model do
   # VALID KING MOVES
 
   describe "CASTLING" do 
-    let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                            current_position_y: 3) }
-    it "checks if king has never moved" do
-      expect(king.has_moved?).to be false
+    let(:king) { FactoryGirl.create(:king, current_position_x: 0, 
+                                            current_position_y: 7,
+                                            piece_color: "black") }
+    let(:destination_x) { 2 }
+    let(:destination_y) { 7 }
+
+    context 'not possible' do
+      context 'king has moved' do
+      
+        before do
+         king.update_attribute(:current_position_x, 4)
+        end
+
+        it 'should return false if king has moved' do
+          expect(king.valid_move?(destination_x, destination_y)).to be(false)
+        end
+      end
+
+      context 'rook has moved' do
+        let(:rook) { FactoryGirl.create(:rook, current_position_x: 1, 
+                                            current_position_y: 7,
+                                            piece_color: "black") }
+        before do
+         rook.update_attribute(:current_position_x, 0)
+        end
+
+        it 'should return false if rook has moved' do
+          expect(king.valid_move?(destination_x, destination_y)).to be(false)
+        end
+      end
+
+      context 'pieces in between' do
+        let(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
+                                            current_position_y: 7,
+                                            piece_color: "black") }
+        it "should return false if pieces in between" do
+          expect(king.valid_move?(destination_x, destination_y)).to be(false)
+        end
+      end
     end
+
+    #context 'possible' do
+      # let...
+      
+     # it { expect(valid_move?(destination_x, destination_y)).to be(true) }
+    #end
   end
 
   describe "#valid_move? true" do 
