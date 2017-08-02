@@ -16,9 +16,8 @@ class PiecesController < ApplicationController
 
   def update
     piece = Piece.find(params[:id])
-    @game = piece.game
-    piece.update_attributes(piece_params)
-    redirect_to game_path(@game)
+    row = params[:row].to_i
+    column = params[:column].to_i
   end
 
   private
