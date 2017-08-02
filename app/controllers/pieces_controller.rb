@@ -15,15 +15,16 @@ class PiecesController < ApplicationController
   end
 
   def update
-    piece = Piece.find(params[:id])
+    @piece = Piece.find(params[:id])
     row = params[:row].to_i
     column = params[:column].to_i
+    @piece.save
 
-    if piece_valid_move?(column, row)
-      @piece.current_position_x = column
-      @piece.current_position_y = row
-      @piece.save
-    end
+    # if @piece.valid_move?(column, row)
+    #   @piece.current_position_x = column
+    #   @piece.current_position_y = row
+    #   @piece.save
+    # end
   end
 
   private
