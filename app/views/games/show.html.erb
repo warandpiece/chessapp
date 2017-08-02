@@ -40,13 +40,12 @@
   $('.chessboard').find('td').droppable({
     drop:function(event, ui){
       snapToMiddle(ui.draggable,$(this));
-      
       selected_td = $(this)[0];
-      moved_piece_image = ui.draggable[0];
-      row = selected_td.dataset.row;
-      column = selected_td.dataset.column;
+      moved_piece_image = ui.draggable[0]
+      row = selected_td.dataset.row
+      column = selected_td.dataset.column
       game_id = <%= @game.id %>;
-      piece_id = moved_piece_image.dataset.id;
+      piece_id = moved_piece_image.dataset.id
 
       $.post('/pieces/' + piece_id,
           {game_id: game_id, row: row, column: column, _method: 'put'}
