@@ -74,8 +74,7 @@ RSpec.describe Game, type: :model do
                           user_id: game.black_player_id, current_position_x: 0, 
                           current_position_y: 0)
 
-
-      expect(game.check).to eq([:white_player, true])
+      expect(game.check).to eq(true)
     end
 
     it "black in check" do 
@@ -89,9 +88,10 @@ RSpec.describe Game, type: :model do
       white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
                           user_id: game.white_player_id, current_position_x: 0, 
                           current_position_y: 7)
+      game.turn = "black"
 
 
-      expect(game.check).to eq([:black_player, true])
+      expect(game.check).to eq(true)
     end
 
     it "not in check" do 

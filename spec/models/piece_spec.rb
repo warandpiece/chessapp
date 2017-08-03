@@ -75,6 +75,7 @@ RSpec.describe Piece, type: :model do
                                                current_position_y: 0) }
       let!(:king2) { FactoryGirl.create(:king, current_position_x: 7, 
                                                current_position_y: 7) }
+
       let(:current_x_king1) { 0 }
       let(:current_x_king2) { 7 }
       let(:dest_x_offboard_right) { 8 }

@@ -66,5 +66,4 @@ class Piece < ApplicationRecord
       return is_diagonal_move_blocked(destination_x, destination_y)
     end
   end
-
 end

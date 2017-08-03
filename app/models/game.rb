@@ -20,20 +20,18 @@ class Game < ApplicationRecord
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
   end
 
-  def check
-    white_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "white")
-    black_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "black")
+  def opposite_color
+    self.turn == "white" ? "black" : "white"
+  end
 
-    Piece.where(game_id: self.id).each do |piece|
-      if piece.piece_color == "white"
-        return :black_player, true if piece.valid_move?(black_king.current_position_x, 
-                                                        black_king.current_position_y)
-      elsif piece.piece_color == "black"
-        return :white_player, true if piece.valid_move?(white_king.current_position_x, 
-                                                        white_king.current_position_y)
-      end
+  def check
+    king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
+    opposite_color = self.opposite_color
+
+    Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
+        return true if piece.valid_move?(king.current_position_x, king.current_position_y)
     end
-    return false
+    false
   end
 
   private
