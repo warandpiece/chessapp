@@ -71,7 +71,7 @@ RSpec.describe Game, type: :model do
       black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
                           user_id: game.black_player_id, current_x: 0, current_y: 0)
 
-      expect(game.check).to eq([:white_player, true])
+      expect(game.check).to eq(true)
     end
 
     it "black in check" do 
