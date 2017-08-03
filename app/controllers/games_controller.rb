@@ -10,12 +10,12 @@ class GamesController < ApplicationController
   end
 
   def create
-    game = Game.new(game_params)
-    game.white_player_id = current_user.id
-    game.black_player_id = current_user.id
+    @game = Game.new(game_params)
+    @game.white_player_id = current_user.id
+    @game.black_player_id = current_user.id
 
-    if game.save
-      redirect_to game
+    if @game.save
+      redirect_to @game
     else
       render :new, status: :unprocessable_entity # 422
     end
