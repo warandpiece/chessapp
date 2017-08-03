@@ -13,14 +13,66 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:rook) }.to change { Piece.count }
   end
 
+  it 'has valid factory' do
+    expect { FactoryGirl.create(:pawn) }.to change { Piece.count }
+  end
+
+  it 'has valid factory' do
+    expect { FactoryGirl.create(:queen) }.to change { Piece.count }
+  end
+
+  # PAWN PROMOTION
+
+  describe 'a queen is a queen' do
+    let!(:queen1) { FactoryGirl.create(:queen, current_x: 0, current_y: 0) }
+    it 'should just be' do
+      expect(queen1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'black pawn is promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+                                             current_x: 0, current_y: 0) }
+    it 'should be promoted to queen' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'black pawn is NOT promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+                                             current_x: 0, current_y: 2) }
+    it 'should still be a pawn' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Pawn"
+    end
+  end
+
+  describe 'white pawn is promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+                                             current_x: 0, current_y: 7) }
+    it 'should be promoted to queen' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Queen"
+    end
+  end
+
+  describe 'white pawn is NOT promoted' do
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+                                             current_x: 0, current_y: 3) }
+    it 'should still be a pawn' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Pawn"
+    end
+  end
+
+
   # VALID MOVES
 
   describe "valid_move?" do
     context "off board" do
-      let!(:king1) { FactoryGirl.create(:king, current_position_x: 0, 
-                                               current_position_y: 0) }
-      let!(:king2) { FactoryGirl.create(:king, current_position_x: 7, 
-                                               current_position_y: 7) }
+      let!(:king1) { FactoryGirl.create(:king, current_x: 0, current_y: 0) }
+      let!(:king2) { FactoryGirl.create(:king, current_x: 7, current_y: 7) }
       let(:current_x_king1) { 0 }
       let(:current_x_king2) { 7 }
       let(:dest_x_offboard_right) { 8 }
@@ -52,9 +104,9 @@ RSpec.describe Piece, type: :model do
 
   describe 'piece obstructed horizontally' do
     context 'left to right' do
-      let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-      let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 3, current_position_y: 0) }
-      let!(:rook3) { FactoryGirl.create(:rook, current_position_x: 5, current_position_y: 0) }
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 3, current_y: 0) }
+      let!(:rook3) { FactoryGirl.create(:rook, current_x: 5, current_y: 0) }
       let(:dest_x) { 5 }
       let(:dest_y) { 0 }
       it 'should return true (move 0,0 to 5,0 blocked on 3,0)' do
@@ -63,8 +115,8 @@ RSpec.describe Piece, type: :model do
     end
     
     context 'left to right - edge case - piece on destination position' do
-      let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-      let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 3, current_position_y: 0) }
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 3, current_y: 0) }
       let(:dest_x) { 3 }
       let(:dest_y) { 0 }
       it 'should return false (move 0,0 to 3,0 another piece on 3,0)' do
@@ -73,9 +125,9 @@ RSpec.describe Piece, type: :model do
     end
 
     context 'right to left' do
-      let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 5, current_position_y: 0) }
-      let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 3, current_position_y: 0) }
-      let!(:rook3) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 5, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 3, current_y: 0) }
+      let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
       let(:dest_x) { 0 }
       let(:dest_y) { 0 }
       it 'should return true (move 5,0 to 0,0 blocked on 3,0)' do
@@ -84,8 +136,8 @@ RSpec.describe Piece, type: :model do
     end
 
     context 'right to left - edge case - piece on destination position' do
-      let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 5, current_position_y: 0) }
-      let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 3, current_position_y: 0) }
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 5, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 3, current_y: 0) }
       let(:dest_x) { 3 }
       let(:dest_y) { 0 }
       it 'should return false (move 5,0 to 3,0 another piece on 3,0)' do
@@ -96,8 +148,8 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'piece NOT obstructed horizontally' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 5, current_position_y: 0) }
+    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 5, current_y: 0) }
     let(:dest_x) { 3 }
     let(:dest_y) { 0 }
     it 'should return false (move 0,0 to 3,0)' do
@@ -112,9 +164,9 @@ RSpec.describe Piece, type: :model do
 
 describe 'piece obstructed vertically' do
   context 'bottom to top' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 3) }
-    let!(:rook3) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 5) }
+    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+    let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
     let(:dest_x) { 0 }
     let(:dest_y) { 5 }
     it 'should return true (move 0,0 to 0,5 blocked on 0,3)' do
@@ -123,8 +175,8 @@ describe 'piece obstructed vertically' do
   end
 
   context 'bottom to top - edge case - piece on destination position' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 3) }
+    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
     let(:dest_x) { 0 }
     let(:dest_y) { 3 }
     it 'should return false (move 0,0 to 0,3 another piece on 0,3)' do
@@ -133,9 +185,9 @@ describe 'piece obstructed vertically' do
   end
 
   context 'top to bottom' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 5) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 3) }
-    let!(:rook3) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
+    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+    let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
     let(:dest_x) { 0 }
     let(:dest_y) { 0 }
     it 'should return true (move 0,5 to 0,0 blocked on 0,3)' do
@@ -144,8 +196,8 @@ describe 'piece obstructed vertically' do
   end
 
   context 'top to bottom - edge case - piece on destination position' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 5) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
+    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
     let(:dest_x) { 0 }
     let(:dest_y) { 0 }
     it 'should return false (move 0,5 to 0,0, another piece on 0,0)' do
@@ -155,9 +207,9 @@ describe 'piece obstructed vertically' do
 end
 
 describe 'piece NOT obstructed vertically' do
-  let!(:rook1) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 0) }
-  let!(:rook2) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 5) }
-  let!(:rook3) { FactoryGirl.create(:rook, current_position_x: 0, current_position_y: 3) }
+  let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+  let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+  let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
   let(:dest_x) { 0 }
   let(:dest_y) { 3 }
   it 'should return false (move 0,0 to 0,3)' do
@@ -172,8 +224,8 @@ end
 
 describe 'piece obstructed diagonally' do
   context 'bottom right to upper left' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 0) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 3, current_position_y: 4) }
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
     let(:dest_x) { 0 }
     let(:dest_y) { 7 }
     it 'should return true (move 7,0 to 0,7 blocked on 3,4)' do
@@ -182,8 +234,8 @@ describe 'piece obstructed diagonally' do
   end
 
   context 'bottom right to upper left - edge case - piece on destination position' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 0) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 3, current_position_y: 4) }
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
     let(:dest_x) { 3 }
     let(:dest_y) { 4 }
     it 'should return false (move 7,0 to 3,4 -  another piece on 3,4)' do
@@ -192,8 +244,8 @@ describe 'piece obstructed diagonally' do
   end
 
   context 'upper right to bottom left' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 7) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 3, current_position_y: 4) }
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
     let(:dest_x) { 7 }
     let(:dest_y) { 0 }
     it 'should return true (move 0,7 to 7,0 blocked on 3,4)' do
@@ -202,8 +254,8 @@ describe 'piece obstructed diagonally' do
   end
 
   context 'upper right to bottom left - edge case - piece on destination position' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 7) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 3, current_position_y: 4) }
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
     let(:dest_x) { 3 }
     let(:dest_y) { 4 }
     it 'should return false (move 0,7 to 3,4 - another piece on 3,4)' do
@@ -213,8 +265,8 @@ describe 'piece obstructed diagonally' do
 end
 
 describe 'bottom left to upper right' do
-  let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 0) }
-  let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 4, current_position_y: 4) }
+  let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
+  let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 7 }
   let(:dest_y) { 7 }
   it 'should return true (move 0,0 to 7,7 blocked on 4,4)' do
@@ -223,8 +275,8 @@ describe 'bottom left to upper right' do
 end
 
 describe 'bottom left to upper right - edge case - piece on destination position' do
-  let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 0) }
-  let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 4, current_position_y: 4) }
+  let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
+  let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 4 }
   let(:dest_y) { 4 }
   it 'should return false (move 0,0 to 4,4  - another piece on 4,4)' do
@@ -233,8 +285,8 @@ describe 'bottom left to upper right - edge case - piece on destination position
 end
 
 describe 'upper right to bottom left' do
-  let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 7) }
-  let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 4, current_position_y: 4) }
+  let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 7) }
+  let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 0 }
   let(:dest_y) { 0 }
   it 'should return true (move 7,7 to 0,0 blocked on 4,4)' do
@@ -243,8 +295,8 @@ describe 'upper right to bottom left' do
 end
 
 describe 'upper right to bottom left - edge case - piece on destination position' do
-  let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 7) }
-  let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 4, current_position_y: 4) }
+  let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 7) }
+  let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 4 }
   let(:dest_y) { 4 }
   it 'should return false (move 7,7 to 4,4 - another piece on 4,4)' do
@@ -254,10 +306,10 @@ end
 
 describe 'piece NOT obstructed' do
     #one piece in each corner
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 0) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_position_x: 0, current_position_y: 7) }
-    let!(:bishop3) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 0) }
-    let!(:bishop4) { FactoryGirl.create(:bishop, current_position_x: 7, current_position_y: 7) }
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
+    let!(:bishop3) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
+    let!(:bishop4) { FactoryGirl.create(:bishop, current_x: 7, current_y: 7) }
 
     let(:dest_x) { 4 }
     let(:dest_y) { 4 }
