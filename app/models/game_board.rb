@@ -14,7 +14,8 @@ class GameBoard
   end
 
   def self.make_board(game)
-    make_rook(game)
+    make_piece(game, "white", [{ x: 0, y: 0 }, { x: 7, y: 0 }], game.white_player_id, "Rook")
+    make_piece(game, "black", [{ x: 0, y: 7 }, { x: 7, y: 7 }], game.black_player_id, "Rook")
     make_knight(game)
     make_bishop(game)
     make_queen(game)
@@ -22,7 +23,15 @@ class GameBoard
     make_pawn(game)
   end
 
-  def self.make_rook(game)
+  def self.make_piece(game, color, positions, player_id, piece_type)
+    positions.each do |position|
+      Piece.create(piece_type: piece_type, piece_color: color,
+        current_position_x: position[:x], current_position_y: position[:y], 
+        user_id: player_id, game_id: game.id)
+    end
+  end
+
+  def self.make_rook_original(game)
     [{ x: 0, y: 0 }, { x: 7, y: 0 }].each do |position|
       Piece.create(piece_type: "Rook", piece_color: "white", 
         current_x: position[:x], current_y: position[:y], 

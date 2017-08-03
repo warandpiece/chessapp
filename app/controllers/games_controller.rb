@@ -14,6 +14,7 @@ class GamesController < ApplicationController
     @game.white_player_id = current_user.id
     @game.black_player_id = nil
     @game.game_status = :open
+    
     if @game.save
       redirect_to @game
     else
