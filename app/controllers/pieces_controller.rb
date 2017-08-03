@@ -15,7 +15,7 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = Piece.find(params[:id])
+    @piece = Piece.find_by(id: params[:id])
     row = params[:row].to_i
     column = params[:column].to_i
 
