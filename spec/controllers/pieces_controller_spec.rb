@@ -14,5 +14,5 @@ RSpec.describe PiecesController, type: :controller do
     #   expect(piece.id).to eq 3
     #   expect(piece.id). to eq 3
     # end
-  # end
+  end
 end
