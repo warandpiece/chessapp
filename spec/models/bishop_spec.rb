@@ -13,8 +13,7 @@ RSpec.describe Bishop, type: :model do
 
   describe "#valid_move? true" do 
     context "diagonal moves" do 
-      let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                                  current_position_y: 3) }
+      let!(:bishop) { FactoryGirl.create(:bishop, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y_top) { 5 }
@@ -40,8 +39,7 @@ RSpec.describe Bishop, type: :model do
     # SHOULD NOT MOVE VERTICALLY OR HORIZONTALLY
 
     context "Should not move vertically" do 
-      let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                                  current_position_y: 3) }
+      let!(:bishop) { FactoryGirl.create(:bishop, current_x: 3, current_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 5 }
       let(:dest_y_bottom) { 1 }
@@ -56,8 +54,7 @@ RSpec.describe Bishop, type: :model do
     end
 
     context "should not move horizontally" do 
-      let!(:bishop) { FactoryGirl.create(:bishop, current_position_x: 3, 
-                                                  current_position_y: 3) }
+      let!(:bishop) { FactoryGirl.create(:bishop, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y) { 3 }

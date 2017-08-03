@@ -8,8 +8,7 @@ RSpec.describe King, type: :model do
   # VALID KING MOVES
 
   describe "CASTLING" do 
-    let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                            current_position_y: 3) }
+    let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
     it "checks if king has never moved" do
       expect(king.has_moved?).to be false
     end
@@ -18,8 +17,7 @@ RSpec.describe King, type: :model do
   describe "#valid_move? true" do 
 
     context "vertical moves" do 
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 4 }
       let(:dest_y_bottom) { 2 }
@@ -34,8 +32,7 @@ RSpec.describe King, type: :model do
     end
 
     context "horizontal moves" do 
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 4 }
       let(:dest_x_left) { 2 }
       let(:dest_y) { 3 }
@@ -50,8 +47,7 @@ RSpec.describe King, type: :model do
     end
 
     context "diagonal moves" do 
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 4 }
       let(:dest_x_left) { 2 }
       let(:dest_y_top) { 4 }
@@ -79,8 +75,7 @@ RSpec.describe King, type: :model do
 
   describe "#valid_move? false" do
     context "more than one square vertically" do
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 5 }
       let(:dest_y_bottom) { 1 }
@@ -95,8 +90,7 @@ RSpec.describe King, type: :model do
     end
 
     context "more than one square horizontally" do
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y) { 3 }
@@ -111,8 +105,7 @@ RSpec.describe King, type: :model do
     end
 
     context "more than one square diagonally" do
-      let!(:king) { FactoryGirl.create(:king, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:king) { FactoryGirl.create(:king, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y_top) { 5 }

@@ -29,7 +29,7 @@ class Game < ApplicationRecord
     opposite_color = self.opposite_color
 
     Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
-        return true if piece.valid_move?(king.current_position_x, king.current_position_y)
+        return true if piece.valid_move?(king.current_x, king.current_y)
     end
     false
   end
