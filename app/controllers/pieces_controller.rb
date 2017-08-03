@@ -15,9 +15,15 @@ class PiecesController < ApplicationController
   end
 
   def update
-    @piece = current_user.games.pieces.find_by(id: params[:id])
-    return render_not_found if @piece.blank?
-    @piece.update_attributes(piece_params)
+    @piece = Piece.find_by(id: params[:id])
+    row = params[:row].to_i
+    column = params[:column].to_i
+
+    if @piece.valid_move?(column, row)
+      @piece.current_position_x = column
+      @piece.current_position_y = row
+      @piece.save
+    end
   end
 
   private

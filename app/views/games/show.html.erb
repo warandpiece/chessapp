@@ -9,12 +9,17 @@
   <% 7.downto(0) do |row| %>
     <tr>
       <% 0.upto(7) do |col| %>
-        <td class="text-center">
+        <td class="text-center" data-column="<%=col%>" data-row="<%=row%>">
           <%=
             if (props = piece_at_location?(@pieces, row, col))
               color = props[0]
+              id = props[2]
               type = props[1].downcase
-              image_tag("#{color}-#{type}.svg")
+              if props[3] == :selected
+                color = "red"
+              else
+                 link_to image_tag("#{color}-#{type}.svg", border: 0, class: 'piece', data: {id: id}), {action: 'update', controller: 'pieces', id: id}, method: :put
+              end
             end
           %>
         </td>
@@ -22,3 +27,36 @@
     </tr>
   <% end %>
 </table>
+
+<script>
+  $('.piece').draggable( {
+    create: function(){$(this).data('position',$(this).position())},
+    cursorAt:{left:15},
+    cursor:'move',
+    containment: $('.chessboard'),
+    start:function(){$(this).stop(true,true)}
+  });
+  
+  $('.chessboard').find('td').droppable({
+    drop:function(event, ui){
+      snapToMiddle(ui.draggable,$(this));
+      selected_td = $(this)[0];
+      moved_piece_image = ui.draggable[0]
+      row = selected_td.dataset.row
+      column = selected_td.dataset.column
+      game_id = <%= @game.id %>;
+      piece_id = moved_piece_image.dataset.id
+
+      $.post('/pieces/' + piece_id,
+          {game_id: game_id, row: row, column: column, _method: 'put'}
+          );
+      location.reload();
+    }
+  });
+
+  function snapToMiddle(dragger, target){
+     var topMove = target.position().top - dragger.data('position').top + (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
+      var leftMove= target.position().left - dragger.data('position').left + (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
+      dragger.animate({top:topMove,left:leftMove},{duration:600,easing:'easeOutBack'});
+  }
+</script>
