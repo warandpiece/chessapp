@@ -29,7 +29,6 @@ class PiecesController < ApplicationController
   private
 
   def piece_params
-    params.require(:piece).permit(:piece_type, :piece_color, :current_position_x, 
-        :current_position_y)
+    params.require(:piece).permit(:piece_type, :piece_color, :current_x, :current_y)
   end
 end

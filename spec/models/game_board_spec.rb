@@ -27,8 +27,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_rook(game)
 
       rook_positions.each do |position|
-        expect(Rook.exists?(current_position_x: position[:x],
-                            current_position_y: position[:y])).to eq(true)
+        expect(Rook.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end
@@ -41,8 +40,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_knight(game)
 
       knight_positions.each do |position|
-        expect(Knight.exists?(current_position_x: position[:x],
-                              current_position_y: position[:y])).to eq(true)
+        expect(Knight.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end
@@ -55,8 +53,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_bishop(game)
 
       bishop_positions.each do |position|
-        expect(Bishop.exists?(current_position_x: position[:x],
-                              current_position_y: position[:y])).to eq(true)
+        expect(Bishop.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end
@@ -69,8 +66,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_queen(game)
 
       queen_positions.each do |position|
-        expect(Queen.exists?(current_position_x: position[:x],
-                             current_position_y: position[:y])).to eq(true)
+        expect(Queen.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end
@@ -83,8 +79,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_king(game)
 
       king_positions.each do |position|
-        expect(King.exists?(current_position_x: position[:x],
-                            current_position_y: position[:y])).to eq(true)
+        expect(King.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end
@@ -102,8 +97,7 @@ RSpec.describe GameBoard, type: :model do
       GameBoard.make_pawn(game)
 
       pawn_positions.each do |position|
-        expect(Pawn.exists?(current_position_x: position[:x],
-                            current_position_y: position[:y])).to eq(true)
+        expect(Pawn.exists?(current_x: position[:x], current_y: position[:y])).to eq(true)
       end
     end
   end

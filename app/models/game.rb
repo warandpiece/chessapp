@@ -2,11 +2,13 @@ class Game < ApplicationRecord
   belongs_to :white_player, class_name: 'User', optional: true
   belongs_to :black_player, class_name: 'User', optional: true
 
+  GAME_STATUS = [:open, :in_progress, :white_wins, :black_wins, :draw, :stalemate, :white_check, :black_check]
+
   has_many :pieces
   has_many :moves
   has_one :game_board
 
-  scope :available, -> {where('black_player_id is NULL').or(where('white_player_id is NULL'))}
+  scope :available, -> { where(game_status: :open) }
 
   after_create :set_game_board
 
@@ -18,20 +20,18 @@ class Game < ApplicationRecord
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
   end
 
-  def check
-    white_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "white")
-    black_king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: "black")
+  def opposite_color
+    self.turn == "white" ? "black" : "white"
+  end
 
-    Piece.where(game_id: self.id).each do |piece|
-      if piece.piece_color == "white"
-        return :black_player, true if piece.valid_move?(black_king.current_position_x, 
-                                                        black_king.current_position_y)
-      elsif piece.piece_color == "black"
-        return :white_player, true if piece.valid_move?(white_king.current_position_x, 
-                                                        white_king.current_position_y)
-      end
+  def check
+    king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
+    opposite_color = self.opposite_color
+
+    Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
+        return true if piece.valid_move?(king.current_x, king.current_y)
     end
-    return false
+    false
   end
 
   private

@@ -5,20 +5,26 @@ class Pawn < Piece
     return false if super(destination_x, destination_y) == false
     case
     when self.first_move == "first_move_white"
-      (destination_y - self.current_position_y).between?(1, 2)
+      (destination_y - self.current_y).between?(1, 2)
     when self.first_move == "first_move_black"
-      (self.current_position_y - destination_y).between?(1, 2)
+      (self.current_y - destination_y).between?(1, 2)
     when self.piece_color == "white"
-      destination_y - self.current_position_y == 1
+      destination_y - self.current_y == 1
     when self.piece_color == "black"
-      self.current_position_y - destination_y == 1 
+      self.current_y - destination_y == 1 
     else
       false
     end
   end
 
   def first_move
-    return "first_move_white" if self.piece_color == "white" && self.current_position_y == 1
-    return "first_move_black" if self.piece_color == "black" && self.current_position_y == 6
+    return "first_move_white" if self.piece_color == "white" && self.current_y == 1
+    return "first_move_black" if self.piece_color == "black" && self.current_y == 6
+  end
+
+  def promote
+    self.piece_type = "Queen" if 
+      (self.piece_color == "white" && self.current_y == 7) ||
+      (self.piece_color == "black" && self.current_y == 0)
   end
 end
