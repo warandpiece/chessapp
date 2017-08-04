@@ -19,7 +19,7 @@ class PiecesController < ApplicationController
     row = params[:row].to_i
     column = params[:column].to_i
 
-    if @piece.move?(column, row)
+    if @piece.valid_move?(column, row)
       @piece.current_x = column
       @piece.current_y = row
       @piece.save
