@@ -19,11 +19,19 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
+  # NOT_OCCUPIED_BY_ME? METHOD
+
+  def not_occupied_by_me?(destination_x, destination_y)
+    game.pieces.where(piece_color: self.piece_color, current_x: destination_x, 
+                      current_y: destination_y).empty?
+  end
+
   # VALID_MOVE METHOD
 
   def valid_move?(destination_x, destination_y)
     destination_x.between?(0, 7) && destination_y.between?(0, 7) &&
-    is_move_blocked(destination_x, destination_y) == false
+    is_move_blocked(destination_x, destination_y) == false &&
+    not_occupied_by_me?(destination_x, destination_y)
   end
 
   # MOVE_BLOCKED METHODS
