@@ -12,8 +12,8 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.white_player_id = current_user.id
-    @game.black_player_id = current_user.id
-
+    @game.black_player_id = nil
+    @game.game_status = :open
     if @game.save
       redirect_to @game
     else
@@ -34,8 +34,22 @@ class GamesController < ApplicationController
       @game.update(game_params)
       redirect_to @game, notice: 'Game was successfully updated.'
     else
-      render :edit
+      @game[:black_player_id] = current_user.id
+      redirect_to @game
+      
+    # else
+    #   render :edit
     end
+
+
+  end
+
+  def join
+    @game = Game.find_by(id: params[:id])
+    if @game
+      @game = Game.black_player_id = current_user.id
+    end
+    
   end
 
   private
