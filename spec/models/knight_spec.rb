@@ -9,8 +9,7 @@ RSpec.describe Knight, type: :model do
 
   describe "#valid_move_knight?" do 
     context "8 point star" do 
-      let!(:knight) { FactoryGirl.create(:knight, current_position_x: 3, 
-                                                  current_position_y: 3) }
+      let!(:knight) { FactoryGirl.create(:knight, current_x: 3, current_y: 3) }
       let(:x_plus_1) { 4 }
       let(:x_plus_2) { 5 }
       let(:x_minus_1) { 2 }
@@ -44,23 +43,22 @@ RSpec.describe Knight, type: :model do
 # SHOULD NOT MOVE VERTICALLY, HORIZONTALLY, OR DIAGONALLY
 
     context "non valid moves should fail" do 
-      let!(:knight) { FactoryGirl.create(:knight, current_position_x: 3, 
-                                                  current_position_y: 3) }
-      let(:current_position_x) { 3 }
+      let!(:knight) { FactoryGirl.create(:knight, current_x: 3, current_y: 3) }
+      let(:current_x) { 3 }
       let(:x_plus_2) { 5 }
       let(:x_minus_2) { 1 }
-      let(:current_position_y) { 3 }
+      let(:current_y) { 3 }
       let(:y_plus_2) { 5 }
       let(:y_minus_2) { 1 }
 
       it "should not move vertically" do
-        expect(knight.valid_move_knight?(x_plus_2, current_position_y)).to be false
-        expect(knight.valid_move_knight?(x_minus_2, current_position_y)).to be false
+        expect(knight.valid_move_knight?(x_plus_2, current_y)).to be false
+        expect(knight.valid_move_knight?(x_minus_2, current_y)).to be false
       end
 
       it "should not move horizontally" do
-        expect(knight.valid_move_knight?(current_position_x, y_plus_2)).to be false
-        expect(knight.valid_move_knight?(current_position_x, y_minus_2)).to be false
+        expect(knight.valid_move_knight?(current_x, y_plus_2)).to be false
+        expect(knight.valid_move_knight?(current_x, y_minus_2)).to be false
       end
 
       it "should not move diagonally" do

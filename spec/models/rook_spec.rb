@@ -9,8 +9,7 @@ RSpec.describe Rook, type: :model do
 
    describe "#valid_move? true" do 
     context "vertical moves" do 
-      let!(:rook) { FactoryGirl.create(:rook, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:rook) { FactoryGirl.create(:rook, current_x: 3, current_y: 3) }
       let(:dest_x) { 3 }
       let(:dest_y_top) { 5 }
       let(:dest_y_bottom) { 1 }
@@ -25,8 +24,7 @@ RSpec.describe Rook, type: :model do
     end
 
     context "horizontal moves" do 
-      let!(:rook) { FactoryGirl.create(:rook, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:rook) { FactoryGirl.create(:rook, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 5 }
       let(:dest_x_left) { 1 }
       let(:dest_y) { 3 }
@@ -45,8 +43,7 @@ RSpec.describe Rook, type: :model do
 
   describe "#valid_move? false" do 
     context "It should not move diagonally" do 
-      let!(:rook) { FactoryGirl.create(:rook, current_position_x: 3, 
-                                              current_position_y: 3) }
+      let!(:rook) { FactoryGirl.create(:rook, current_x: 3, current_y: 3) }
       let(:dest_x_right) { 4 }
       let(:dest_x_left) { 2 }
       let(:dest_y_top) { 4 }

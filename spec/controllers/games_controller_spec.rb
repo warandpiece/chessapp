@@ -39,7 +39,8 @@ RSpec.describe GamesController, type: :controller do
 
         expect do
           post :create, params: { game: { white_player_id: white_player,
-                                          black_player_id: black_player, game_status: 'In play' } }
+                                          black_player_id: black_player, 
+                                          game_status: 'In play' } }
         end.to change(Game, :count).by(1)
       end
     end
