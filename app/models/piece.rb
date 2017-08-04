@@ -73,17 +73,10 @@ class Piece < ApplicationRecord
     game.pieces.where(piece_color: self.piece_color, current_x: destination_x, current_y: destination_y).empty?
   end
 
-  # MOVE MUST BE ON THE BOARD
-
-  def on_the_board?(destination_x, destination_y)
-    destination_x.between?(0, 7) && destination_y.between?(0, 7)
-  end
-
   # MOVE METHOD
 
   def move?(destination_x, destination_y)
     not_occupied_by_me?(destination_x, destination_y) &&
-    on_the_board?(destination_x, destination_y) &&
     valid_move?(destination_x, destination_y)
   end
 end
