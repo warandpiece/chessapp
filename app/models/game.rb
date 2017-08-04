@@ -63,6 +63,15 @@ class Game < ApplicationRecord
     false
   end
 
+  def make_pieces_for_white_player
+    make_piece("Rook", "white", [{ x: 0, y: 0 }, { x: 7, y: 0 }])
+    make_piece("Knight", "white", [{ x: 1, y: 0 }, { x: 6, y: 0 }])
+    make_piece("Bishop", "white", [{ x: 2, y: 0 }, { x: 5, y: 0 }])
+    make_piece("Queen", "white", [{ x: 3, y: 0 }])
+    make_piece("King", "white", [{ x: 4, y: 0 }])
+    make_piece("Pawn", "white", [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }, { x: 5, y: 1 }, { x: 6, y: 1 }, { x: 7, y: 1 }])
+  end
+  
   def make_pieces_for_black_player
     make_piece("Rook", "black", [{ x: 0, y: 7 }, { x: 7, y: 7 }])
     make_piece("Knight", "black", [{ x: 1, y: 7 }, { x: 6, y: 7 }])
@@ -70,15 +79,6 @@ class Game < ApplicationRecord
     make_piece("Queen", "black", [{ x: 3, y: 7 }])
     make_piece("King", "black", [{ x: 4, y: 7 }])
     make_piece("Pawn", "black", [{ x: 0, y: 6 }, { x: 1, y: 6 }, { x: 2, y: 6 }, { x: 3, y: 6 }, { x: 4, y: 6 }, { x: 5, y: 6 }, { x: 6, y: 6 }, { x: 7, y: 6 }])
-  end
-
-  def make_pieces_for_white_player
-    make_piece("Rook", "white", [{ x: 0, y: 0 }, { x: 7, y: 0 }])
-    make_piece("Knight", "white", [])
-    make_piece("Bishop", "white", [])
-    make_piece("Queen", "white", [])
-    make_piece("King", "white", [])
-    make_piece("Pawn", "white", [])
   end
 
   private
