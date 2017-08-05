@@ -4,12 +4,12 @@ class King < Piece
 
   def valid_move?(destination_x, destination_y)
     return false if super(destination_x, destination_y) == false
-    self.castling(destination_x, destination_y) ||
+    self.castling?(destination_x, destination_y) ||
     	(self.current_x - destination_x).abs <= 1 && 
          (self.current_y - destination_y).abs <= 1
   end
 
-  def castling(destination_x, destination_y)
+  def castling?(destination_x, destination_y)
    !self.has_moved? && !rook_on_side_moved?(destination_x, destination_y) &&
    		!pieces_between?(destination_x, destination_y)
   end

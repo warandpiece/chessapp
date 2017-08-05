@@ -16,7 +16,7 @@ RSpec.describe King, type: :model do
     let(:destination_y) { 7 }
 
     context 'possible' do
-      context 'king has not moved - rook on 0' do
+      context 'king has not moved - rook on 0 - and NO pieces in between' do
         let!(:rook) { FactoryGirl.create(:rook, current_x: 0, 
                                             current_y: 7,
                                             piece_color: "black") }
@@ -25,13 +25,28 @@ RSpec.describe King, type: :model do
         end
       end
 
-      context 'king has not moved - rook on 7' do
+      context 'king has not moved - rook on 7 - and NO pieces in between' do
         let(:destination_x) { 6 }
         let!(:rook) { FactoryGirl.create(:rook, current_x: 7, 
                                             current_y: 7,
                                             piece_color: "black") }
         it 'should return TRUE if king has not moved' do
           expect(king.valid_move?(destination_x, destination_y)).to be(true)
+        end
+      end
+
+      context 'WHITE king has not moved - rook on 7 - and NO pieces in between' do
+        let!(:king2) { FactoryGirl.create(:king, current_x: 4, 
+                                            current_y: 0,
+                                            piece_color: "white") }
+        let!(:rook2) { FactoryGirl.create(:rook, current_x: 7, 
+                                            current_y: 0,
+                                            piece_color: "white") }
+        let(:destination_x) { 6 }
+        let(:destination_y) { 0 }
+
+        it 'should return TRUE if white king is valid' do
+          expect(king2.valid_move?(destination_x, destination_y)).to be(true)
         end
       end
     end
@@ -45,6 +60,7 @@ RSpec.describe King, type: :model do
         it "should return false if pieces in between" do
           expect(king.valid_move?(destination_x, destination_y)).to be(false)
         end
+      end
 
       context 'king has moved' do
       
@@ -68,9 +84,6 @@ RSpec.describe King, type: :model do
         it 'should return false if rook has moved' do
           expect(king.valid_move?(destination_x, destination_y)).to be(false)
         end
-      end
-
-
       end
     end
 
