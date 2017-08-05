@@ -20,8 +20,11 @@ class King < Piece
 		elsif destination_x == 6
 			rook = Piece.find_by(current_x: 7, current_y: destination_y)
 		end
-		return rook.has_moved? if rook
-		true
+		if rook
+      return rook.has_moved? 
+    else 
+		 return true
+    end
   end
 
   def pieces_between?(destination_x, destination_y)
