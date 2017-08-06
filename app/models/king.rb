@@ -1,4 +1,3 @@
-require 'pry'
 class King < Piece
   # KINGS CAN MOVE ONE SQUARE IN ANY DIRECTION
 
@@ -10,11 +9,11 @@ class King < Piece
   end
 
   def castling?(destination_x, destination_y)
-   !self.has_moved? && !rook_on_side_moved?(destination_x, destination_y) &&
+   !self.has_moved? && !rook_moved?(destination_x, destination_y) &&
    		!pieces_between?(destination_x, destination_y)
   end
 
-  def rook_on_side_moved?(destination_x, destination_y)
+  def rook_moved?(destination_x, destination_y)
     if destination_x == 2
       rook = Piece.find_by(current_x: 0, current_y: destination_y)
     elsif destination_x == 6
