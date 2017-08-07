@@ -21,11 +21,11 @@ class Piece < ApplicationRecord
   # MOVE PIECE
 
   def move
-    if @piece.valid_move?(destination_x, destination_y)
-      @piece.transaction do
-        @piece.current_x = destination_x
-        @piece.current_y = destination_y
-        @piece.save
+    if self.valid_move?(destination_x, destination_y)
+      Piece.transaction do
+        self.current_x = destination_x
+        self.current_y = destination_y
+        self.save
         if game.check == true
           raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
