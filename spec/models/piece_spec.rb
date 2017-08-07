@@ -34,8 +34,13 @@ RSpec.describe Piece, type: :model do
     let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
                                              current_x: 0, current_y: 0) }
     it 'should be promoted to queen' do
-      pawn1.promote
+      pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Queen"
+    end
+
+    it 'should be promoted to rook' do
+      pawn1.promote("Rook")
+      expect(pawn1.piece_type).to be == "Rook"
     end
   end
 
@@ -43,7 +48,7 @@ RSpec.describe Piece, type: :model do
     let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
                                              current_x: 0, current_y: 2) }
     it 'should still be a pawn' do
-      pawn1.promote
+      pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Pawn"
     end
   end
@@ -52,7 +57,7 @@ RSpec.describe Piece, type: :model do
     let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
                                              current_x: 0, current_y: 7) }
     it 'should be promoted to queen' do
-      pawn1.promote
+      pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Queen"
     end
   end
@@ -61,7 +66,7 @@ RSpec.describe Piece, type: :model do
     let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
                                              current_x: 0, current_y: 3) }
     it 'should still be a pawn' do
-      pawn1.promote
+      pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Pawn"
     end
   end
