@@ -40,16 +40,10 @@ class GamesController < ApplicationController
   end
 
   def join
-    @game = Game.find_by(id: params[:id])
-    @game.game_params.update_attributes(:black_player_id => current_user.id)
-    # params[:game][:black_player_id] = current_user.id
-    # @game = Game.find_by(id: params[:id])
-    # bl_pl = Game.game_params
-    # bl_pl[:black_player_id] = current_user.id
-    # @game.save
+    @game = Game.find_by(id: params[:game_id])
+    @game.update_attributes(:black_player_id => current_user.id)
     @game.save
     redirect_to @game 
-
   end
 
   private
@@ -57,8 +51,4 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:white_player_id, :black_player_id, :game_status, :name)
   end
-
-  # def current_game
-  #   @current_game ||= Game.find(params[:id])
-  # end
 end
