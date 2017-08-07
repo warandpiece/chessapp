@@ -24,7 +24,7 @@ RSpec.describe Piece, type: :model do
   # MOVE
 
   describe "#move" do
-      let!(:king) { FactoryGirl.create(:king, piece_color: "white", 
+      let!(:king) { FactoryGirl.create(:king, piece_color: "white",
                                               current_x: 4, current_y: 0) }
       let(:white_rook) { FactoryGirl.create(:rook, piece_color: "white",
                                                    current_x: 3, current_y: 0) }
@@ -61,7 +61,7 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'black pawn is promoted' do
-    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black",
                                              current_x: 0, current_y: 0) }
     it 'should be promoted to queen' do
       pawn1.promote("Queen")
@@ -85,7 +85,7 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'black pawn is NOT promoted' do
-    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black",
                                              current_x: 0, current_y: 2) }
     it 'should still be a pawn' do
       pawn1.promote("Queen")
@@ -94,7 +94,7 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'white pawn is promoted' do
-    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white",
                                              current_x: 0, current_y: 7) }
     it 'should be promoted to queen' do
       pawn1.promote("Queen")
@@ -118,14 +118,13 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'white pawn is NOT promoted' do
-    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white", 
+    let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white",
                                              current_x: 0, current_y: 3) }
     it 'should still be a pawn' do
       pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Pawn"
     end
   end
-
 
   # VALID MOVES
 
@@ -138,23 +137,23 @@ RSpec.describe Piece, type: :model do
       let(:dest_x_offboard_right) { 8 }
       let(:dest_x_offboard_left) { -1 }
       let(:current_y_king1) { 0 }
-      let(:current_y_king2) { 7 }      
+      let(:current_y_king2) { 7 }
       let(:dest_y_offboard_top) { 8 }
       let(:dest_y_offboard_bottom) { -1 }
 
-      it "should be false for off board move to right" do 
+      it "should be false for off board move to right" do
         expect(king2.valid_move?(dest_x_offboard_right, current_y_king2)).to be false
       end
 
-      it "should be false for off board move to left" do 
+      it "should be false for off board move to left" do
         expect(king1.valid_move?(dest_x_offboard_left, current_y_king1)).to be false
       end
 
-      it "should be false for off board move to top" do 
+      it "should be false for off board move to top" do
         expect(king2.valid_move?(current_x_king2, dest_y_offboard_top)).to be false
       end
 
-      it "should be false for off board move to bottom" do 
+      it "should be false for off board move to bottom" do
         expect(king1.valid_move?(current_x_king1, dest_y_offboard_bottom)).to be false
       end
     end
@@ -173,7 +172,7 @@ RSpec.describe Piece, type: :model do
         expect(rook1.is_move_blocked(dest_x,dest_y)).to be true
       end
     end
-    
+
     context 'left to right - edge case - piece on destination position' do
       let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
       let!(:rook2) { FactoryGirl.create(:rook, current_x: 3, current_y: 0) }
