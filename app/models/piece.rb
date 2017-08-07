@@ -18,6 +18,16 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
+  # MOVE PIECE
+
+  def move
+    if @piece.valid_move?(destination_x, destination_y)
+      @piece.current_x = destination_x
+      @piece.current_y = destination_y
+      @piece.save
+    end
+  end
+
   # NOT_OCCUPIED_BY_ME? METHOD
 
   def not_occupied_by_me?(destination_x, destination_y)
