@@ -42,6 +42,16 @@ RSpec.describe Piece, type: :model do
       pawn1.promote("Rook")
       expect(pawn1.piece_type).to be == "Rook"
     end
+
+    it 'should be promoted to knight' do
+      pawn1.promote("Knight")
+      expect(pawn1.piece_type).to be == "Knight"
+    end
+
+    it 'should be promoted to bishop' do
+      pawn1.promote("Bishop")
+      expect(pawn1.piece_type).to be == "Bishop"
+    end
   end
 
   describe 'black pawn is NOT promoted' do
@@ -59,6 +69,21 @@ RSpec.describe Piece, type: :model do
     it 'should be promoted to queen' do
       pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Queen"
+    end
+
+    it 'should be promoted to rook' do
+      pawn1.promote("Rook")
+      expect(pawn1.piece_type).to be == "Rook"
+    end
+
+    it 'should be promoted to knight' do
+      pawn1.promote("Knight")
+      expect(pawn1.piece_type).to be == "Knight"
+    end
+
+    it 'should be promoted to bishop' do
+      pawn1.promote("Bishop")
+      expect(pawn1.piece_type).to be == "Bishop"
     end
   end
 
