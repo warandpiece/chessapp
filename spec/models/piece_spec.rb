@@ -21,6 +21,36 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:queen) }.to change { Piece.count }
   end
 
+  # MOVE
+
+  describe "#move" do
+      let!(:king) { FactoryGirl.create(:king, piece_color: "white", 
+                                              current_x: 4, current_y: 0) }
+      let(:white_rook) { FactoryGirl.create(:rook, piece_color: "white",
+                                                   current_x: 3, current_y: 0) }
+      let(:destination_x) { 3 }
+      let(:destination_y) { 1 }
+
+    context "no king in check" do
+      it "should not save move" do
+        white_rook.move(destination_x, destination_y)
+
+        expect(white_rook.current_y).to eq(1)
+      end
+    end
+
+    context "own king in check" do
+      let(:black_rook) { FactoryGirl.create(:rook, piece_color: "black",
+                                                    current_x: 0, current_y: 0) }
+
+      it "should not save move" do
+        white_rook.move(destination_x, destination_y)
+
+        expect(white_rook.current_y).to eq(0)
+      end
+    end
+  end
+
   # PAWN PROMOTION
 
   describe 'a queen is a queen' do
