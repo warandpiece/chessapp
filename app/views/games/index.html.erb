@@ -12,7 +12,7 @@
       <h5>Created: <%= game.created_at.strftime("%m-%d-%y") %></h4>
       <br/>
       <div>
-        <a class="button"<%= link_to 'JOIN GAME', game_join_path(:game_id), :method => :update%></a>
+        <a class="button"<%= link_to 'JOIN GAME', game_join_path(@game), :method => :update%></a>
       </div>
     </div>
   <% end %>

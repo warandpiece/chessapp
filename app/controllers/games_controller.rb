@@ -33,23 +33,23 @@ class GamesController < ApplicationController
     if @game
       @game.update(game_params)
       redirect_to @game, notice: 'Game was successfully updated.'
-    else
-      @game[:black_player_id] = current_user.id
-      redirect_to @game
       
-    # else
-    #   render :edit
+    else
+      render :edit
     end
-
-
   end
 
   def join
     @game = Game.find_by(id: params[:id])
-    if @game
-      @game = Game.black_player_id = current_user.id
-    end
-    
+    @game.game_params.update_attributes(:black_player_id => current_user.id)
+    # params[:game][:black_player_id] = current_user.id
+    # @game = Game.find_by(id: params[:id])
+    # bl_pl = Game.game_params
+    # bl_pl[:black_player_id] = current_user.id
+    # @game.save
+    @game.save
+    redirect_to @game 
+
   end
 
   private
@@ -57,4 +57,8 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:white_player_id, :black_player_id, :game_status, :name)
   end
+
+  # def current_game
+  #   @current_game ||= Game.find(params[:id])
+  # end
 end
