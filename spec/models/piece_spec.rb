@@ -61,6 +61,11 @@ RSpec.describe Piece, type: :model do
         destination_y = 1
 
         white_rook.move_piece(destination_x, destination_y)
+        puts "Output from piece_spec"
+        puts "    game.id: #{game.id}"
+        puts "    white_rook.current_x: #{white_rook.current_x}"
+        puts "    white_rook.current_y: #{white_rook.current_y}"
+
 
         expect(white_rook.current_y).to eq(0)
       end

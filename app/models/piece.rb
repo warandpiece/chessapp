@@ -22,6 +22,8 @@ class Piece < ApplicationRecord
 
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
+    puts "Output from Piece#move_piece"
+    puts "    game.id: #{game.id}"
     if self.valid_move?(destination_x, destination_y)
       Piece.transaction do
         self.current_x = destination_x

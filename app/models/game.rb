@@ -25,11 +25,14 @@ class Game < ApplicationRecord
   end
 
   def check
+    puts "output from Game#check"
     king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
     opposite_color = self.opposite_color
+    puts "    game.id:game.turn: #{self.id}:#{self.turn}"
 
     Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
-        return true if piece.valid_move?(king.current_x, king.current_y)
+      puts "    piece_color:piece_type——Expect black:Rook #{piece.piece_color}:#{piece.piece_type}"
+      return true if piece.valid_move?(king.current_x, king.current_y)
     end
     false
   end
