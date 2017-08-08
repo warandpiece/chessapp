@@ -20,7 +20,7 @@ class Piece < ApplicationRecord
 
   # MOVE PIECE
 
-  def move(desintation_x, destination_y)
+  def move(destination_x, destination_y)
     if self.valid_move?(destination_x, destination_y)
       Piece.transaction do
         self.current_x = destination_x
