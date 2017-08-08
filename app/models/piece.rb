@@ -18,10 +18,26 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
+  # MOVE_PIECE
+
+  def move_piece(destination_x, destination_y)
+    game = Game.find(self.game_id)
+    if self.valid_move?(destination_x, destination_y)
+      Piece.transaction do
+        self.current_x = destination_x
+        self.current_y = destination_y
+        self.save
+        if game.check == true
+          raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
+        end
+      end
+    end
+  end
+
   # NOT_OCCUPIED_BY_ME? METHOD
 
   def not_occupied_by_me?(destination_x, destination_y)
-    game.pieces.where(piece_color: self.piece_color, current_x: destination_x, 
+    game.pieces.where(piece_color: self.piece_color, current_x: destination_x,
                       current_y: destination_y).empty?
   end
 
@@ -35,7 +51,7 @@ class Piece < ApplicationRecord
 
   # MOVE_BLOCKED METHODS
 
-  def is_horizontal_move_blocked(destination_x)    
+  def is_horizontal_move_blocked(destination_x)
     destination_x > self.current_x ? dir_x = 1 : dir_x = -1
     (1..((destination_x - dir_x) - self.current_x ).abs).each do |i|
       x = self.current_x + i * dir_x
