@@ -51,7 +51,7 @@ class Piece < ApplicationRecord
 
   # MOVE_BLOCKED METHODS
 
-  def is_horizontal_move_blocked(destination_x)   
+  def is_horizontal_move_blocked(destination_x)
     destination_x > self.current_x ? dir_x = 1 : dir_x = -1
     (1..((destination_x - dir_x) - self.current_x ).abs).each do |i|
       x = self.current_x + i * dir_x
