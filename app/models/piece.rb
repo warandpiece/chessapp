@@ -29,6 +29,7 @@ class Piece < ApplicationRecord
         self.current_x = destination_x
         self.current_y = destination_y
         self.save
+        puts "    game.check: #{game.check == true}"
         if game.check == true
           raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
