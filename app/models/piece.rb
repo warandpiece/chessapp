@@ -18,9 +18,10 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
-  # MOVE PIECE
+  # MOVE_PIECE
 
-  def move(destination_x, destination_y)
+  def move_piece(destination_x, destination_y)
+    game = Game.find(self.game_id)
     if self.valid_move?(destination_x, destination_y)
       Piece.transaction do
         self.current_x = destination_x
