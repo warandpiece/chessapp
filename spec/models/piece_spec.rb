@@ -21,11 +21,11 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:queen) }.to change { Piece.count }
   end
 
-  # MOVE
+  # MOVE_PIECE
 
-  describe "#move" do
+  describe "#move_piece" do
     context "no king in check" do
-      it "should not save move" do
+      it "should save move" do
         game = FactoryGirl.create(:game, :no_pieces)
         white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
                                   game_id: game.id, user_id: game.white_player_id, 
