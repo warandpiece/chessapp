@@ -22,7 +22,7 @@ class Pawn < Piece
     return "first_move_black" if self.piece_color == "black" && self.current_y == 6
   end
 
-  def promote(type)
+  def promote(type="Queen")
     self.piece_type = type if 
       (self.piece_color == "white" && self.current_y == 7) ||
       (self.piece_color == "black" && self.current_y == 0)

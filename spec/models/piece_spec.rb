@@ -33,6 +33,11 @@ RSpec.describe Piece, type: :model do
   describe 'black pawn is promoted' do
     let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "black", 
                                              current_x: 0, current_y: 0) }
+    it 'should be promoted to queen by default' do
+      pawn1.promote
+      expect(pawn1.piece_type).to be == "Queen"
+    end
+    
     it 'should be promoted to queen' do
       pawn1.promote("Queen")
       expect(pawn1.piece_type).to be == "Queen"
