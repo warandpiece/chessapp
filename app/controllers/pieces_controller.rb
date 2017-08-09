@@ -18,12 +18,6 @@ class PiecesController < ApplicationController
     @piece = Piece.find_by(id: params[:id])
     row = params[:row].to_i
     column = params[:column].to_i
-
-    if @piece.valid_move?(column, row)
-      @piece.current_x = column
-      @piece.current_y = row
-      @piece.save
-    end
   end
 
   private
