@@ -28,10 +28,10 @@ class Game < ApplicationRecord
     king_y = king.current_y
     (-1..1).each do |x|
       (-1..1).each  do |y|
-        tx = king_x + x
-        ty = king_y + y
-        if king.valid_move?(tx,ty)
-          return false unless enemy_can_attack?(tx,ty)
+        test_x = king_x + x
+        test_y = king_y + y
+        if king.valid_move?(test_x,test_y)
+          return false unless enemy_can_attack?(test_x,test_y)
         end
       end
     end
@@ -39,7 +39,6 @@ class Game < ApplicationRecord
   end
 
   def enemy_can_attack?(x,y)
-
     Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
       return true if piece.valid_move?(x, y)
     end
