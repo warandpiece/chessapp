@@ -20,6 +20,32 @@ class Game < ApplicationRecord
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
   end
 
+  def stalemate?
+    return false if check
+
+    king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
+    kx = king.current_x
+    ky = king.current_y
+    (-1..1).each do |x|
+      (-1..1).each  do |y|
+        tx = kx + x
+        ty = ky + y
+        if king.valid_move?(tx,ty)
+          return false unless enemy_can_attack?(tx,ty)
+        end
+      end
+    end
+    true
+  end
+
+  def enemy_can_attack?(x,y)
+
+    Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
+      return true if piece.valid_move?(x, y)
+    end
+    false
+  end
+
   def opposite_color
     self.turn == "white" ? "black" : "white"
   end
