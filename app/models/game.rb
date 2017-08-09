@@ -24,12 +24,12 @@ class Game < ApplicationRecord
     return false if check
 
     king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
-    kx = king.current_x
-    ky = king.current_y
+    king_x = king.current_x
+    king_y = king.current_y
     (-1..1).each do |x|
       (-1..1).each  do |y|
-        tx = kx + x
-        ty = ky + y
+        tx = king_x + x
+        ty = king_y + y
         if king.valid_move?(tx,ty)
           return false unless enemy_can_attack?(tx,ty)
         end
