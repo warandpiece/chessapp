@@ -101,16 +101,16 @@ RSpec.describe Game, type: :model do
   end
 
   # STALEMATE METHOD
-  describe "#stalemate?" do
-    it "should return true" do
-      game = FactoryGirl.create(:game)
-      expect(game.stalemate?).to eq true
-    end
+  # describe "#stalemate?" do
+  #   it "should return true" do
+  #     game = FactoryGirl.create(:game)
+  #     expect(game.stalemate?).to eq true
+  #   end
 
-    it "should return false" do
-      game = FactoryGirl.create(:game)
-      expect(game.stalemate?).to eq false
-    end
-  end
+  #   it "should return false" do
+  #     game = FactoryGirl.create(:game)
+  #     expect(game.stalemate?).to eq false
+  #   end
+  # end
 
 end
