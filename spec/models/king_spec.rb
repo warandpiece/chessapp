@@ -1,11 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe King, type: :model do
-  it "King should inherit behavior from Piece" do 
-    expect(King.superclass).to eq(Piece)
-  end
+  #it "King should inherit behavior from Piece" do 
+  #  expect(King.superclass).to eq(Piece)
+  #end
 
   # VALID KING MOVES
+
+  describe "CASTLING move rook" do
+    context "destination_x = 2" do
+      let(:destination_x) { 2 }
+      let(:destination_y) { 0 }
+
+      it "should save move of king and rook" do
+        game = FactoryGirl.create(:game, :no_pieces)
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 4, current_y: 0)
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 0, current_y: 0)
+
+        white_king.move_piece_new(destination_x, destination_y)
+        #binding.pry
+        expect(white_rook.current_x).to eq(3)
+        #binding.pry
+        expect(white_king.current_x).to eq(2)
+      end
+    end
+  end
 
   describe "CASTLING" do 
     let!(:king) { FactoryGirl.create(:king, current_x: 4, 
