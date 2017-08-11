@@ -18,8 +18,6 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
-  # MOVE_PIECE
-
   def castling_move_rook(destination_x, destination_y)
     rook = get_rook(destination_x, destination_y)
     if destination_x == 2
@@ -34,33 +32,18 @@ class Piece < ApplicationRecord
     Piece.transaction do
       self.current_x = destination_x
       self.current_y = destination_y
-      self.save!
-    end
-    binding.pry
-  end
-
-  def move_piece_new(destination_x, destination_y)
-    game = Game.find(self.game_id)
-    if self.valid_move?(destination_x, destination_y)
-      if self.castling?(destination_x, destination_y)
-        castling_move_rook(destination_x, destination_y)
-      end
-     
-      Piece.transaction do
-        self.current_x = destination_x
-        self.current_y = destination_y
-        self.save!
-        if game.check == true
-          raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
-        end
-        #binding.pry
-      end
+      self.save
     end
   end
 
+  # MOVE_PIECE
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
     if self.valid_move?(destination_x, destination_y)
+      if self.piece_type == "King" && self.castling?(destination_x, destination_y)
+        castling_move_rook(destination_x, destination_y)
+      end
+     
       Piece.transaction do
         self.current_x = destination_x
         self.current_y = destination_y
