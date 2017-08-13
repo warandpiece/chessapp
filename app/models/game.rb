@@ -20,6 +20,10 @@ class Game < ApplicationRecord
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
   end
 
+  def opposite_color
+    self.turn == "white" ? "black" : "white"
+  end
+
   def stalemate?
     return false if check
 
@@ -45,10 +49,6 @@ class Game < ApplicationRecord
     false
   end
 
-  def opposite_color
-    self.turn == "white" ? "black" : "white"
-  end
-
   def check
     king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
     opposite_color = self.opposite_color
@@ -59,7 +59,28 @@ class Game < ApplicationRecord
     false
   end
 
+  def move_out_of_check?
+    king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
+    starting_x = king.current_x
+    starting_y = king.current_y
+    state = false
+    ((king.current_x - 1)..(king.current_x + 1)).each do |x|
+      ((king.current_y - 1)..(king.current_y + 1)).each do |y|
+        king.update(current_x: x, current_y: y) if king.valid_move?(x,y)
+        state = true unless check
+        king.update(current_x: starting_x, current_y: starting_y)
+      end
+    end
+    state
+  end
+
+  def checkmate?
+    return false unless check
+    return false if move_out_of_check?
+  end
+
   private
+  
   def set_game_board
     GameBoard.make_board(self)
   end
