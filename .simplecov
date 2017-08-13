@@ -5,7 +5,7 @@ end
 
 SimpleCov.at_exit do
   SimpleCov.result.format!
-  SimpleCov.minimum_coverage 82.77
+  SimpleCov.minimum_coverage 75.00
 #  SimpleCov.minimum_coverage_by_file 63
 end
 
