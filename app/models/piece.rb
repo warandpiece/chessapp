@@ -30,6 +30,9 @@ class Piece < ApplicationRecord
         if game.check == true
           raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
+        if game.checkmate == true
+          game_status.update(game_status: :checkmate)
+        end
       end
     end
   end

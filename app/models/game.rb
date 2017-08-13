@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   belongs_to :white_player, class_name: 'User', optional: true
   belongs_to :black_player, class_name: 'User', optional: true
 
-  GAME_STATUS = [:open, :in_progress, :white_wins, :black_wins, :draw, :stalemate, :white_check, :black_check]
+  GAME_STATUS = [:open, :in_progress, :white_wins, :black_wins, :draw, :stalemate, :checkmate]
 
   has_many :pieces
   has_many :moves
