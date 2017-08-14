@@ -38,10 +38,6 @@ class King < Piece
     self.is_move_blocked(x, destination_y)
   end
 
-  def opposite_color
-    self.piece_color == "white" ? "black" : "white"
-  end
-
   def get_x_for_check(destination_x)
     if destination_x == 2
       x = 3
