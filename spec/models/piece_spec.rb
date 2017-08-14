@@ -22,6 +22,32 @@ RSpec.describe Piece, type: :model do
   end
 
   # MOVE_PIECE
+  describe "capture_piece" do
+    it 'should delete piece' do
+      game = FactoryGirl.create(:game, :no_pieces)
+      white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 0, current_y: 0)
+      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 7)
+      black_rook.move_piece(0,0)
+      expect { Piece.find(white_rook.id) }.to raise_error ActiveRecord::RecordNotFound    
+    end
+
+    it 'should not move' do
+      game = FactoryGirl.create(:game, :no_pieces)
+      black_rook_2 = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 0)
+      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 7)
+      black_rook.move_piece(0,0)
+      expect(black_rook.current_y).to eq(7)    
+    end
+
+  end
 
   describe "#move_piece" do
     context "no king in check" do
@@ -38,9 +64,7 @@ RSpec.describe Piece, type: :model do
                                   current_x: 0, current_y: 0)
         destination_x = 3
         destination_y = 1
-
         white_rook.move_piece(destination_x, destination_y)
-
         expect(white_rook.current_y).to eq(1)
       end
     end
