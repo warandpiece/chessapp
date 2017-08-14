@@ -18,11 +18,32 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
-  # MOVE_PIECE
+  def castling_move_rook(destination_x, destination_y)
+    rook = get_rook(destination_x, destination_y)
+    if destination_x == 2
+      rook_dest_x = 3
+    elsif destination_x == 6
+      rook_dest_x = 5
+    end 
+    rook.only_move(rook_dest_x, destination_y)
+  end
 
+  def only_move(destination_x, destination_y)
+    Piece.transaction do
+      self.current_x = destination_x
+      self.current_y = destination_y
+      self.save
+    end
+  end
+
+  # MOVE_PIECE
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
     if self.valid_move?(destination_x, destination_y)
+      if self.piece_type == "King" && self.castling?(destination_x, destination_y)
+        castling_move_rook(destination_x, destination_y)
+      end
+     
       Piece.transaction do
         self.current_x = destination_x
         self.current_y = destination_y
