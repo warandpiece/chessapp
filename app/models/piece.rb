@@ -1,3 +1,5 @@
+require 'pry'
+
 class Piece < ApplicationRecord
   belongs_to :user
   belongs_to :game
@@ -29,10 +31,21 @@ class Piece < ApplicationRecord
   end
 
   def only_move(destination_x, destination_y)
-    Piece.transaction do
-      self.current_x = destination_x
-      self.current_y = destination_y
-      self.save
+    self.current_x = destination_x
+    self.current_y = destination_y
+    self.save
+  end
+
+  def opposite_color
+    self.piece_color == "white" ? "black" : "white"
+  end
+
+  def capture(destination_x,destination_y)
+    piece = Piece.find_by(current_x: destination_x, current_y: destination_y)
+    if piece
+        if piece.piece_color == self.opposite_color
+          piece.destroy
+        end
     end
   end
 
@@ -43,14 +56,14 @@ class Piece < ApplicationRecord
       if self.piece_type == "King" && self.castling?(destination_x, destination_y)
         castling_move_rook(destination_x, destination_y)
       end
-     
+      self.capture(destination_x,destination_y)
       Piece.transaction do
         self.current_x = destination_x
         self.current_y = destination_y
         self.save
-        if game.check == true
-          raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
-        end
+        #if game.check == true
+        #  raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
+        #end
       end
     end
   end
