@@ -21,36 +21,28 @@ RSpec.describe Piece, type: :model do
     expect { FactoryGirl.create(:queen) }.to change { Piece.count }
   end
 
-  # MOVE_PIECE
-  describe "capture_piece" do
-    it 'should delete piece' do
-      game = FactoryGirl.create(:game, :no_pieces)
-      white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
-                                  game_id: game.id, user_id: game.white_player_id, 
-                                  current_x: 0, current_y: 0)
-      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
-                                  game_id: game.id, user_id: game.black_player_id, 
-                                  current_x: 0, current_y: 7)
-      black_rook.move_piece(0,0)
-      expect(white_rook.reload.current_y).to eq(nil)
-      expect(white_rook.reload.current_x).to eq(nil)    
-    end
-
-    it 'should not move' do
-      game = FactoryGirl.create(:game, :no_pieces)
-      black_rook_2 = Piece.create(piece_type: 'Rook', piece_color: 'black', 
-                                  game_id: game.id, user_id: game.black_player_id, 
-                                  current_x: 0, current_y: 0)
-      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
-                                  game_id: game.id, user_id: game.black_player_id, 
-                                  current_x: 0, current_y: 7)
-      black_rook.move_piece(0,0)
-      expect(black_rook.current_y).to eq(7)    
-    end
-
-  end
-
   describe "#move_piece" do
+    context "own king in check" do
+      it "should not save move" do
+        game = FactoryGirl.create(:game, :no_pieces)
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 4, current_y: 0)
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 3, current_y: 0)
+        black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 0)
+        destination_x = 3
+        destination_y = 1
+
+        white_rook.move_piece(destination_x, destination_y)
+
+        expect(white_rook.reload.current_y).to eq(0)
+      end
+    end
+
     context "no king in check" do
       it "should save move" do
         game = FactoryGirl.create(:game, :no_pieces)
@@ -69,28 +61,41 @@ RSpec.describe Piece, type: :model do
         expect(white_rook.current_y).to eq(1)
       end
     end
-
-    # context "own king in check" do
-    #   it "should not save move" do
-    #     game = FactoryGirl.create(:game, :no_pieces)
-    #     white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
-    #                               game_id: game.id, user_id: game.white_player_id, 
-    #                               current_x: 4, current_y: 0)
-    #     white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
-    #                               game_id: game.id, user_id: game.white_player_id, 
-    #                               current_x: 3, current_y: 0)
-    #     black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
-    #                               game_id: game.id, user_id: game.black_player_id, 
-    #                               current_x: 0, current_y: 0)
-    #     destination_x = 3
-    #     destination_y = 1
-
-    #     white_rook.move_piece(destination_x, destination_y)
-
-    #     expect(white_rook.current_y).to eq(0)
-    #   end
-    # end
   end
+
+
+  # MOVE_PIECE
+  describe "capture_piece" do
+    it 'should delete piece' do
+      game = FactoryGirl.create(:game, :no_pieces)
+      white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 4, current_y: 0)
+      white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 0, current_y: 0)
+      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 7)
+      black_rook.move_piece(0,0)
+      expect { Piece.find(white_rook.id) }.to raise_error ActiveRecord::RecordNotFound    
+    end
+
+    it 'should not move' do
+      game = FactoryGirl.create(:game, :no_pieces)
+      black_rook_2 = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 0)
+      black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', 
+                                  game_id: game.id, user_id: game.black_player_id, 
+                                  current_x: 0, current_y: 7)
+      black_rook.move_piece(0,0)
+      expect(black_rook.current_y).to eq(7)    
+    end
+
+  end
+
+
 
   # PAWN PROMOTION
 
@@ -249,7 +254,6 @@ RSpec.describe Piece, type: :model do
         expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
       end
     end
-
   end
 
   describe 'piece NOT obstructed horizontally' do
@@ -267,119 +271,119 @@ RSpec.describe Piece, type: :model do
 
 # VERTICAL OBSTRUCTION
 
-describe 'piece obstructed vertically' do
-  context 'bottom to top' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
-    let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
-    let(:dest_x) { 0 }
-    let(:dest_y) { 5 }
-    it 'should return true (move 0,0 to 0,5 blocked on 0,3)' do
-      expect(rook1.is_move_blocked(dest_x,dest_y)).to be true
+  describe 'piece obstructed vertically' do
+    context 'bottom to top' do
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+      let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+      let(:dest_x) { 0 }
+      let(:dest_y) { 5 }
+      it 'should return true (move 0,0 to 0,5 blocked on 0,3)' do
+        expect(rook1.is_move_blocked(dest_x,dest_y)).to be true
+      end
+    end
+
+    context 'bottom to top - edge case - piece on destination position' do
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+      let(:dest_x) { 0 }
+      let(:dest_y) { 3 }
+      it 'should return false (move 0,0 to 0,3 another piece on 0,3)' do
+        expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
+      end
+    end
+
+    context 'top to bottom' do
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+      let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let(:dest_x) { 0 }
+      let(:dest_y) { 0 }
+      it 'should return true (move 0,5 to 0,0 blocked on 0,3)' do
+        expect(rook1.is_move_blocked(dest_x,dest_y)).to be true
+      end
+    end
+
+    context 'top to bottom - edge case - piece on destination position' do
+      let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+      let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
+      let(:dest_x) { 0 }
+      let(:dest_y) { 0 }
+      it 'should return false (move 0,5 to 0,0, another piece on 0,0)' do
+        expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
+      end
     end
   end
 
-  context 'bottom to top - edge case - piece on destination position' do
+  describe 'piece NOT obstructed vertically' do
     let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
+    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
+    let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
     let(:dest_x) { 0 }
     let(:dest_y) { 3 }
-    it 'should return false (move 0,0 to 0,3 another piece on 0,3)' do
+    it 'should return false (move 0,0 to 0,3)' do
       expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
     end
-  end
-
-  context 'top to bottom' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
-    let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
-    let(:dest_x) { 0 }
-    let(:dest_y) { 0 }
-    it 'should return true (move 0,5 to 0,0 blocked on 0,3)' do
-      expect(rook1.is_move_blocked(dest_x,dest_y)).to be true
+    it 'should return false (move 0,5 to 0,3)' do
+      expect(rook2.is_move_blocked(dest_x,dest_y)).to be false
     end
   end
-
-  context 'top to bottom - edge case - piece on destination position' do
-    let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
-    let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
-    let(:dest_x) { 0 }
-    let(:dest_y) { 0 }
-    it 'should return false (move 0,5 to 0,0, another piece on 0,0)' do
-      expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
-    end
-  end
-end
-
-describe 'piece NOT obstructed vertically' do
-  let!(:rook1) { FactoryGirl.create(:rook, current_x: 0, current_y: 0) }
-  let!(:rook2) { FactoryGirl.create(:rook, current_x: 0, current_y: 5) }
-  let!(:rook3) { FactoryGirl.create(:rook, current_x: 0, current_y: 3) }
-  let(:dest_x) { 0 }
-  let(:dest_y) { 3 }
-  it 'should return false (move 0,0 to 0,3)' do
-    expect(rook1.is_move_blocked(dest_x,dest_y)).to be false
-  end
-  it 'should return false (move 0,5 to 0,3)' do
-    expect(rook2.is_move_blocked(dest_x,dest_y)).to be false
-  end
-end
 
 # DIAGONAL OBSTRUCTION
 
-describe 'piece obstructed diagonally' do
-  context 'bottom right to upper left' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
-    let(:dest_x) { 0 }
+  describe 'piece obstructed diagonally' do
+    context 'bottom right to upper left' do
+      let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
+      let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
+      let(:dest_x) { 0 }
+      let(:dest_y) { 7 }
+      it 'should return true (move 7,0 to 0,7 blocked on 3,4)' do
+        expect(bishop1.is_move_blocked(dest_x,dest_y)).to be true
+      end
+    end
+
+    context 'bottom right to upper left - edge case - piece on destination position' do
+      let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
+      let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
+      let(:dest_x) { 3 }
+      let(:dest_y) { 4 }
+      it 'should return false (move 7,0 to 3,4 -  another piece on 3,4)' do
+        expect(bishop1.is_move_blocked(dest_x,dest_y)).to be false
+      end
+    end
+
+    context 'upper right to bottom left' do
+      let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
+      let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
+      let(:dest_x) { 7 }
+      let(:dest_y) { 0 }
+      it 'should return true (move 0,7 to 7,0 blocked on 3,4)' do
+        expect(bishop1.is_move_blocked(dest_x ,dest_y)).to be true
+      end
+    end
+
+    context 'upper right to bottom left - edge case - piece on destination position' do
+      let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
+      let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
+      let(:dest_x) { 3 }
+      let(:dest_y) { 4 }
+      it 'should return false (move 0,7 to 3,4 - another piece on 3,4)' do
+        expect(bishop1.is_move_blocked(dest_x ,dest_y)).to be false
+      end
+    end
+  end
+
+  describe 'bottom left to upper right' do
+    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
+    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
+    let(:dest_x) { 7 }
     let(:dest_y) { 7 }
-    it 'should return true (move 7,0 to 0,7 blocked on 3,4)' do
+    it 'should return true (move 0,0 to 7,7 blocked on 4,4)' do
       expect(bishop1.is_move_blocked(dest_x,dest_y)).to be true
     end
   end
 
-  context 'bottom right to upper left - edge case - piece on destination position' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 0) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
-    let(:dest_x) { 3 }
-    let(:dest_y) { 4 }
-    it 'should return false (move 7,0 to 3,4 -  another piece on 3,4)' do
-      expect(bishop1.is_move_blocked(dest_x,dest_y)).to be false
-    end
-  end
-
-  context 'upper right to bottom left' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
-    let(:dest_x) { 7 }
-    let(:dest_y) { 0 }
-    it 'should return true (move 0,7 to 7,0 blocked on 3,4)' do
-      expect(bishop1.is_move_blocked(dest_x ,dest_y)).to be true
-    end
-  end
-
-  context 'upper right to bottom left - edge case - piece on destination position' do
-    let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
-    let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 3, current_y: 4) }
-    let(:dest_x) { 3 }
-    let(:dest_y) { 4 }
-    it 'should return false (move 0,7 to 3,4 - another piece on 3,4)' do
-      expect(bishop1.is_move_blocked(dest_x ,dest_y)).to be false
-    end
-  end
-end
-
-describe 'bottom left to upper right' do
-  let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
-  let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
-  let(:dest_x) { 7 }
-  let(:dest_y) { 7 }
-  it 'should return true (move 0,0 to 7,7 blocked on 4,4)' do
-    expect(bishop1.is_move_blocked(dest_x,dest_y)).to be true
-  end
-end
-
-describe 'bottom left to upper right - edge case - piece on destination position' do
+  describe 'bottom left to upper right - edge case - piece on destination position' do
   let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
   let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 4 }
@@ -387,9 +391,9 @@ describe 'bottom left to upper right - edge case - piece on destination position
   it 'should return false (move 0,0 to 4,4  - another piece on 4,4)' do
     expect(bishop1.is_move_blocked(dest_x,dest_y)).to be false
   end
-end
+  end
 
-describe 'upper right to bottom left' do
+  describe 'upper right to bottom left' do
   let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 7) }
   let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 0 }
@@ -397,9 +401,9 @@ describe 'upper right to bottom left' do
   it 'should return true (move 7,7 to 0,0 blocked on 4,4)' do
     expect(bishop1.is_move_blocked(dest_x,dest_y)).to be true
   end
-end
+  end
 
-describe 'upper right to bottom left - edge case - piece on destination position' do
+  describe 'upper right to bottom left - edge case - piece on destination position' do
   let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 7, current_y: 7) }
   let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 4, current_y: 4) }
   let(:dest_x) { 4 }
@@ -407,9 +411,9 @@ describe 'upper right to bottom left - edge case - piece on destination position
   it 'should return false (move 7,7 to 4,4 - another piece on 4,4)' do
     expect(bishop1.is_move_blocked(dest_x,dest_y)).to be false
   end
-end
+  end
 
-describe 'piece NOT obstructed' do
+  describe 'piece NOT obstructed' do
     #one piece in each corner
     let!(:bishop1) { FactoryGirl.create(:bishop, current_x: 0, current_y: 0) }
     let!(:bishop2) { FactoryGirl.create(:bishop, current_x: 0, current_y: 7) }
@@ -436,5 +440,6 @@ describe 'piece NOT obstructed' do
         expect(bishop4.is_move_blocked(dest_x ,dest_y)).to be false
       end
     end
- end
+  end
+
 end
