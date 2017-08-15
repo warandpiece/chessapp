@@ -41,9 +41,7 @@ class Piece < ApplicationRecord
   def capture(destination_x,destination_y)
     piece = Piece.find_by(current_x: destination_x, current_y: destination_y)
     if piece
-        if piece.piece_color == self.opposite_color
-          piece.destroy
-        end
+      piece.only_move(nil,nil) if piece.piece_color == self.opposite_color
     end
   end
 
