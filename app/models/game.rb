@@ -11,6 +11,7 @@ class Game < ApplicationRecord
   scope :available, -> { where(game_status: :open) }
 
   after_create :set_game_board
+  after_save :set_game_board_bl
 
   validates :white_player, presence: true, allow_blank: true
   validates :black_player, presence: true, allow_blank: true
@@ -62,5 +63,9 @@ class Game < ApplicationRecord
   private
   def set_game_board
     GameBoard.make_board(self)
+  end
+
+  def set_game_board_bl
+    GameBoard.make_board_bl(self)
   end
 end 
