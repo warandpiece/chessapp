@@ -18,25 +18,32 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
+  # CAPTURE METHOD
+
+  def capture(destination_x,destination_y)
+    piece = Piece.find_by(current_x: destination_x, current_y: destination_y)
+    if piece
+      piece.only_move(nil,nil) if piece.piece_color == self.opposite_color
+    end
+  end
+
   # MOVE_PIECE
 
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
-    if piece_color == game.turn
-      if self.valid_move?(destination_x, destination_y)
-        if self.piece_type == "King" && self.castling?(destination_x, destination_y)
-          castling_move_rook(destination_x, destination_y)
+    if self.valid_move?(destination_x, destination_y)
+      if self.piece_type == "King" && self.castling?(destination_x, destination_y)
+        castling_move_rook(destination_x, destination_y)
+      end
+      self.capture(destination_x,destination_y)
+      Piece.transaction do
+        self.current_x = destination_x
+        self.current_y = destination_y
+        self.save
+        if game.check == true
+         raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
-        self.capture(destination_x,destination_y)
-        Piece.transaction do
-          self.current_x = destination_x
-          self.current_y = destination_y
-          self.save
-          if game.check == true
-           raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
-          end
-          game.turn_change
-        end
+        game.turn_change
       end
     end
   end
