@@ -18,7 +18,27 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
-  # CAPTURE METHOD
+  # MOVE_PIECE
+
+  def castling_move_rook(destination_x, destination_y)
+    rook = get_rook(destination_x, destination_y)
+    if destination_x == 2
+      rook_dest_x = 3
+    elsif destination_x == 6
+      rook_dest_x = 5
+    end 
+    rook.only_move(rook_dest_x, destination_y)
+  end
+
+  def only_move(destination_x, destination_y)
+    self.current_x = destination_x
+    self.current_y = destination_y
+    self.save
+  end
+
+  def opposite_color
+    self.piece_color == "white" ? "black" : "white"
+  end
 
   def capture(destination_x,destination_y)
     piece = Piece.find_by(current_x: destination_x, current_y: destination_y)
@@ -28,7 +48,6 @@ class Piece < ApplicationRecord
   end
 
   # MOVE_PIECE
-
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
     if self.valid_move?(destination_x, destination_y)

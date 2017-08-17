@@ -7,6 +7,106 @@ RSpec.describe King, type: :model do
 
   # VALID KING MOVES
 
+  describe "CASTLING check in between" do 
+    context "white king"     
+      let(:destination_x) { 6 }
+      let(:destination_y) { 0 }  
+
+      it "in check" do 
+        game = FactoryGirl.create(:game, :no_pieces)   
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 4, current_y: 0)      
+
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 7, current_y: 0)
+        black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
+                            user_id: game.black_player_id, current_x: 5, current_y: 7)
+
+        expect(white_king.valid_move?(destination_x, destination_y)).to be(false)
+      end
+
+      it "NOT in check" do 
+        game = FactoryGirl.create(:game, :no_pieces)   
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 4, current_y: 0)      
+
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 7, current_y: 0)
+        black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
+                            user_id: game.black_player_id, current_x: 3, current_y: 7)
+
+        expect(white_king.valid_move?(destination_x, destination_y)).to be(true)
+      end
+    end
+
+    context "black king"     
+      let(:destination_x) { 2 }
+      let(:destination_y) { 7 }  
+
+      it "is in check" do 
+        game = FactoryGirl.create(:game, :no_pieces)       
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 3, current_y: 0)
+        black_king = Piece.create(piece_type: 'King', piece_color: 'black', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 4, current_y: 7) 
+        black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
+                            user_id: game.black_player_id, current_x: 0, current_y: 7)
+        expect(black_king.valid_move?(destination_x, destination_y)).to be(false)
+      end
+
+      it "is NOT in check" do 
+        game = FactoryGirl.create(:game, :no_pieces)       
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 7, current_y: 0)
+        black_king = Piece.create(piece_type: 'King', piece_color: 'black', game_id: game.id,
+                            user_id: game.white_player_id, current_x: 4, current_y: 7) 
+        black_rook = Piece.create(piece_type: 'Rook', piece_color: 'black', game_id: game.id,
+                            user_id: game.black_player_id, current_x: 0, current_y: 7)
+        expect(black_king.valid_move?(destination_x, destination_y)).to be(true)
+      end
+    end
+
+  describe "CASTLING move rook" do
+    context "destination_x = 2" do
+      let(:destination_x) { 2 }
+      let(:destination_y) { 0 }
+
+      it "should save move of king and rook" do
+        game = FactoryGirl.create(:game, :no_pieces)
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 4, current_y: 0)
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 0, current_y: 0)
+
+        white_king.move_piece(destination_x, destination_y)
+        expect(white_rook.reload.current_x).to eq(3)
+        expect(white_king.reload.current_x).to eq(2)
+      end
+    end
+
+    context "destination_x = 6" do
+      let(:destination_x) { 6 }
+      let(:destination_y) { 0 }
+
+      it "should save move of king and rook" do
+        game = FactoryGirl.create(:game, :no_pieces)
+        white_king = Piece.create(piece_type: 'King', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 4, current_y: 0)
+        white_rook = Piece.create(piece_type: 'Rook', piece_color: 'white', 
+                                  game_id: game.id, user_id: game.white_player_id, 
+                                  current_x: 7, current_y: 0)
+
+        white_king.move_piece(destination_x, destination_y)
+        expect(white_rook.reload.current_x).to eq(5)
+        expect(white_king.reload.current_x).to eq(6)
+      end
+    end
+
+  end
+
   describe "CASTLING" do 
     let!(:king) { FactoryGirl.create(:king, current_x: 4, 
                                             current_y: 7,
@@ -202,4 +302,3 @@ RSpec.describe King, type: :model do
       end
     end
   end
-end
