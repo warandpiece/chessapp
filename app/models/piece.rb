@@ -24,12 +24,16 @@ class Piece < ApplicationRecord
     game = Game.find(self.game_id)
     if piece_color == game.turn
       if self.valid_move?(destination_x, destination_y)
+        if self.piece_type == "King" && self.castling?(destination_x, destination_y)
+          castling_move_rook(destination_x, destination_y)
+        end
+        self.capture(destination_x,destination_y)
         Piece.transaction do
           self.current_x = destination_x
           self.current_y = destination_y
           self.save
           if game.check == true
-            raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
+           raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
           end
           game.turn_change
         end
