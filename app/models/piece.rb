@@ -18,6 +18,8 @@ class Piece < ApplicationRecord
     self.created_at != self.updated_at
   end
 
+  # MOVE_PIECE
+
   def castling_move_rook(destination_x, destination_y)
     rook = get_rook(destination_x, destination_y)
     if destination_x == 2
@@ -60,6 +62,7 @@ class Piece < ApplicationRecord
         if game.check == true
          raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
+        game.turn_change
       end
     end
   end

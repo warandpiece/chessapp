@@ -18,6 +18,13 @@ class PiecesController < ApplicationController
     @piece = Piece.find_by(id: params[:id])
     row = params[:row].to_i
     column = params[:column].to_i
+      if @piece_color != @piece.game.turn
+        render text: "It is the other player's turn"
+      elsif @piece.move_piece(row, column == false)
+        render text: "Invalid Move"
+      else
+        render text: "Valid Move"
+      end          
   end
 
   private
