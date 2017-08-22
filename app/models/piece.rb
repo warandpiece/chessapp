@@ -1,3 +1,5 @@
+require 'pry'
+
 class Piece < ApplicationRecord
   belongs_to :user
   belongs_to :game
@@ -50,11 +52,13 @@ class Piece < ApplicationRecord
   # MOVE_PIECE
   def move_piece(destination_x, destination_y)
     game = Game.find(self.game_id)
+    binding.pry
     if self.valid_move?(destination_x, destination_y)
       if self.piece_type == "King" && self.castling?(destination_x, destination_y)
         castling_move_rook(destination_x, destination_y)
       end
-      self.capture(destination_x,destination_y)
+      self.capture(destination_x,destination_y) if self.piece_type != "Pawn"
+      #binding.pry
       Piece.transaction do
         self.current_x = destination_x
         self.current_y = destination_y

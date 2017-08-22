@@ -1,3 +1,4 @@
+require 'pry'
 require 'rails_helper'
 
 RSpec.describe Pawn, type: :model do
@@ -6,6 +7,31 @@ RSpec.describe Pawn, type: :model do
   end
 
   describe "#valid_move?" do
+
+    # PAWN CAPTURES DIAGONALLY
+
+    context "white pawn diagonal capture upper right" do 
+      let!(:game) { FactoryGirl.create(:game, :no_pieces) }
+      let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white",
+                                        game_id: game.id, current_x: 2, current_y: 2) }
+      let!(:pawn2) { FactoryGirl.create(:pawn, piece_color: "black",
+                                        game_id: game.id, current_x: 3, current_y: 3) }
+      let!(:black_king) { Piece.create(piece_type: 'King', piece_color: 'black', 
+                                  game_id: game.id, current_x: 4, current_y: 0) }
+      let(:destination_x) { 4 }
+      let(:destination_y) { 4 }
+
+      it "white pawn captures black pawn and moves" do
+        binding.pry
+        pawn1.move_piece(destination_x,destination_y)
+        pawn1.reload
+        pawn2.reload
+        expect(pawn1.current_x).to eq(destination_x)
+        expect(pawn1.current_y).to eq(destination_y)
+        expect(pawn2.current_x).to eq(nil)
+        expect(pawn2.current_y).to eq(nil)  
+      end      
+    end
 
     # FIRST MOVE VALID
 

@@ -1,8 +1,11 @@
+require 'pry'
+
 class Pawn < Piece
   # PAWNS MOVE ONE OR TWO SQUARES FORWARD ON FIRST MOVE
   # OTHERWISE CAN ONLY MOVE ONE SQUARE FORWARD
   def valid_move?(destination_x, destination_y)
     return false if super(destination_x, destination_y) == false
+    binding.pry
     case
     when self.first_move == "first_move_white"
       (destination_y - self.current_y).between?(1, 2)
@@ -12,9 +15,19 @@ class Pawn < Piece
       destination_y - self.current_y == 1
     when self.piece_color == "black"
       self.current_y - destination_y == 1 
+    when self.pawn_capture_move?(destination_x, destination_y)
+      self.capture(destination_x, destination_y)
     else
       false
     end
+  end
+
+  def pawn_capture_move?(destination_x, destination_y)
+    binding.pry
+    ((self.piece_color == "white" && destination_y - self.current_y == 2) ||
+        (self.piece_color == "black" && self.current_y - destination_y == 2)) &&
+          (destination_x - self.current_x).abs == 2 &&
+            self.is_diagonal_move_blocked(destination_x, destination_y)  
   end
 
   def first_move
