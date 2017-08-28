@@ -7,6 +7,97 @@ RSpec.describe Pawn, type: :model do
 
   describe "#valid_move?" do
 
+    # PAWN CAPTURES DIAGONALLY
+
+    context "black pawn diagonal capture bottom left" do 
+      let!(:game) { FactoryGirl.create(:game, :no_pieces) }
+      let!(:w_pawn) { FactoryGirl.create(:pawn, piece_color: "white",
+                                        game_id: game.id, current_x: 2, current_y: 2) }
+      let!(:b_pawn) { FactoryGirl.create(:pawn, piece_color: "black",
+                                        game_id: game.id, current_x: 3, current_y: 3) }
+      let!(:white_king) { FactoryGirl.create(:king, piece_color: 'white', 
+                                  game_id: game.id, current_x: 4, current_y: 7) }
+      let(:destination_x) { 1 }
+      let(:destination_y) { 1 }
+
+      it "black pawn captures white pawn and moves" do
+        b_pawn.move_piece(destination_x,destination_y)
+        w_pawn.reload
+        b_pawn.reload
+        expect(b_pawn.current_x).to eq(destination_x)
+        expect(b_pawn.current_y).to eq(destination_y)
+        expect(w_pawn.current_x).to eq(nil)
+        expect(w_pawn.current_y).to eq(nil)  
+      end      
+    end
+
+
+    context "black pawn diagonal capture bottom right" do 
+      let!(:game) { FactoryGirl.create(:game, :no_pieces) }
+      let!(:w_pawn) { FactoryGirl.create(:pawn, piece_color: "white",
+                                        game_id: game.id, current_x: 2, current_y: 2) }
+      let!(:b_pawn) { FactoryGirl.create(:pawn, piece_color: "black",
+                                        game_id: game.id, current_x: 1, current_y: 3) }
+      let!(:white_king) { FactoryGirl.create(:king, piece_color: 'white', 
+                                  game_id: game.id, current_x: 4, current_y: 7) }
+      let(:destination_x) { 3 }
+      let(:destination_y) { 1 }
+
+      it "black pawn captures white pawn and moves" do
+        b_pawn.move_piece(destination_x,destination_y)
+        w_pawn.reload
+        b_pawn.reload
+        expect(b_pawn.current_x).to eq(destination_x)
+        expect(b_pawn.current_y).to eq(destination_y)
+        expect(w_pawn.current_x).to eq(nil)
+        expect(w_pawn.current_y).to eq(nil)  
+      end      
+    end
+
+    context "white pawn diagonal capture upper left" do 
+      let!(:game) { FactoryGirl.create(:game, :no_pieces) }
+      let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white",
+                                        game_id: game.id, current_x: 2, current_y: 2) }
+      let!(:pawn2) { FactoryGirl.create(:pawn, piece_color: "black",
+                                        game_id: game.id, current_x: 1, current_y: 3) }
+      let!(:black_king) { FactoryGirl.create(:king, piece_color: 'white', 
+                                  game_id: game.id, current_x: 4, current_y: 0) }
+      let(:destination_x) { 0 }
+      let(:destination_y) { 4 }
+
+      it "white pawn captures black pawn and moves" do
+        pawn1.move_piece(destination_x,destination_y)
+        pawn1.reload
+        pawn2.reload
+        expect(pawn1.current_x).to eq(destination_x)
+        expect(pawn1.current_y).to eq(destination_y)
+        expect(pawn2.current_x).to eq(nil)
+        expect(pawn2.current_y).to eq(nil)  
+      end      
+    end
+
+    context "white pawn diagonal capture upper right" do 
+      let!(:game) { FactoryGirl.create(:game, :no_pieces) }
+      let!(:pawn1) { FactoryGirl.create(:pawn, piece_color: "white",
+                                        game_id: game.id, current_x: 2, current_y: 2) }
+      let!(:pawn2) { FactoryGirl.create(:pawn, piece_color: "black",
+                                        game_id: game.id, current_x: 3, current_y: 3) }
+      let!(:black_king) { FactoryGirl.create(:king, piece_color: 'white', 
+                                  game_id: game.id, current_x: 4, current_y: 0) }
+      let(:destination_x) { 4 }
+      let(:destination_y) { 4 }
+
+      it "white pawn captures black pawn and moves" do
+        pawn1.move_piece(destination_x,destination_y)
+        pawn1.reload
+        pawn2.reload
+        expect(pawn1.current_x).to eq(destination_x)
+        expect(pawn1.current_y).to eq(destination_y)
+        expect(pawn2.current_x).to eq(nil)
+        expect(pawn2.current_y).to eq(nil)  
+      end      
+    end
+
     # FIRST MOVE VALID
 
     context "first moves valid" do 

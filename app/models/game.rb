@@ -52,9 +52,10 @@ class Game < ApplicationRecord
   def check
     king = Piece.find_by(game_id: self.id, piece_type: "King", piece_color: self.turn)
     opposite_color = self.opposite_color
-
     Piece.where(game_id: self.id, piece_color: opposite_color).each do |piece|
+      if piece.current_x
         return true if piece.valid_move?(king.current_x, king.current_y)
+      end
     end
     false
   end

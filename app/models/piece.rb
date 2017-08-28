@@ -41,6 +41,9 @@ class Piece < ApplicationRecord
   end
 
   def capture(destination_x,destination_y)
+    if self.piece_type == "Pawn"
+      destination_x, destination_y = pawn_coord_for_capture(destination_x, destination_y)
+    end
     piece = Piece.find_by(current_x: destination_x, current_y: destination_y)
     if piece
       piece.only_move(nil,nil) if piece.piece_color == self.opposite_color
@@ -54,11 +57,12 @@ class Piece < ApplicationRecord
       if self.piece_type == "King" && self.castling?(destination_x, destination_y)
         castling_move_rook(destination_x, destination_y)
       end
-      self.capture(destination_x,destination_y)
-      Piece.transaction do
-        self.current_x = destination_x
-        self.current_y = destination_y
-        self.save
+      self.capture(destination_x,destination_y) if self.piece_type != "Pawn"
+      Piece.transaction do  
+        #self.current_x = destination_x
+        #self.current_y = destination_y
+        #self.save
+        self.only_move(destination_x,destination_y)
         if game.check == true
          raise ActiveRecord::Rollback, 'Move forbidden, as it exposes your king to check'
         end
