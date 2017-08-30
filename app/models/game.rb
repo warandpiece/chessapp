@@ -91,7 +91,7 @@ class Game < ApplicationRecord
     player_id = color == "white" ? self.white_player_id : self.black_player_id
     positions.each do |position|
       Piece.create(piece_type: piece_type, piece_color: color,
-        current_position_x: position[:x], current_position_y: position[:y], 
+        current_x: position[:x], current_y: position[:y], 
         user_id: player_id, game_id: self.id)
     end
   end
