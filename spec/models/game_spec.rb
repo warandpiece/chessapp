@@ -2,16 +2,18 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   describe ".set_game_board" do
-    it "should increate piece count by 32" do
+    # NOTE: black pieces are created after player joins
+    it "should create piece count by 16" do
       game = FactoryGirl.create(:game, :full)
-      expect(Piece.where(game_id: game.id).count).to eq(32)
+      expect(Piece.where(game_id: game.id).count).to eq(16)
     end
   
-    it ".set_game_board is called after game creation" do
-      game = FactoryGirl.build(:game)
-      expect(game).to receive(:set_game_board)
-      game.save
-    end
+    # NOTE: game is deprecated
+    # it ".set_game_board is called after game creation" do
+    #   game = FactoryGirl.build(:game)
+    #   expect(game).to receive(:set_game_board)
+    #   game.save
+    # end
   end
 
   describe "initial turn" do
