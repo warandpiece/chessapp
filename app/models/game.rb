@@ -10,11 +10,14 @@ class Game < ApplicationRecord
 
   scope :available, -> { where(game_status: :open) }
 
-  after_create :set_game_board
+  after_create :make_pieces_for_white_player
 
   validates :white_player, presence: true, allow_blank: true
   validates :black_player, presence: true, allow_blank: true
   validates :game_status, presence: true
+
+  def create_pieces_for_player(player_id, color)
+  end
 
   def turn_change
     self.turn == "white" ? self.turn = "black" : self.turn = "white"
@@ -60,8 +63,37 @@ class Game < ApplicationRecord
     false
   end
 
+  def make_pieces_for_white_player
+    make_piece("Rook", "white", [{ x: 0, y: 0 }, { x: 7, y: 0 }])
+    make_piece("Knight", "white", [{ x: 1, y: 0 }, { x: 6, y: 0 }])
+    make_piece("Bishop", "white", [{ x: 2, y: 0 }, { x: 5, y: 0 }])
+    make_piece("Queen", "white", [{ x: 3, y: 0 }])
+    make_piece("King", "white", [{ x: 4, y: 0 }])
+    make_piece("Pawn", "white", [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }, { x: 5, y: 1 }, { x: 6, y: 1 }, { x: 7, y: 1 }])
+  end
+  
+  def make_pieces_for_black_player
+    make_piece("Rook", "black", [{ x: 0, y: 7 }, { x: 7, y: 7 }])
+    make_piece("Knight", "black", [{ x: 1, y: 7 }, { x: 6, y: 7 }])
+    make_piece("Bishop", "black", [{ x: 2, y: 7 }, { x: 5, y: 7 }])
+    make_piece("Queen", "black", [{ x: 3, y: 7 }])
+    make_piece("King", "black", [{ x: 4, y: 7 }])
+    make_piece("Pawn", "black", [{ x: 0, y: 6 }, { x: 1, y: 6 }, { x: 2, y: 6 }, { x: 3, y: 6 }, { x: 4, y: 6 }, { x: 5, y: 6 }, { x: 6, y: 6 }, { x: 7, y: 6 }])
+  end
+
   private
+
   def set_game_board
     GameBoard.make_board(self)
   end
+
+  def make_piece(piece_type, color, positions)
+    player_id = color == "white" ? self.white_player_id : self.black_player_id
+    positions.each do |position|
+      Piece.create(piece_type: piece_type, piece_color: color,
+        current_x: position[:x], current_y: position[:y], 
+        user_id: player_id, game_id: self.id)
+    end
+  end
+
 end 

@@ -14,6 +14,7 @@ class GamesController < ApplicationController
     @game.white_player_id = current_user.id
     @game.black_player_id = nil
     @game.game_status = :open
+
     if @game.save
       redirect_to @game
     else
@@ -42,6 +43,7 @@ class GamesController < ApplicationController
   def join
     @game = Game.find_by(id: params[:game_id])
     @game.update_attributes(:black_player_id => current_user.id)
+    @game.make_pieces_for_black_player
     @game.save
     redirect_to @game 
   end
